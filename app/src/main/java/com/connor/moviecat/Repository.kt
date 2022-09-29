@@ -15,16 +15,10 @@ import kotlinx.coroutines.flow.flow
 
 class Repository(private val tmdbService: TMDBService) {
 
-    companion object {
-        private const val PAGE_SIZE = 50
-    }
-
-    fun getPagingData(): Flow<PagingData<TrendingResult>> {
-        return Pager(
-            config = PagingConfig(PAGE_SIZE),
+    fun getPagingData() = Pager(
+            config = PagingConfig(20),
             pagingSourceFactory = { RepoPagingSource(tmdbService) }
         ).flow
-    }
 
     fun getTrending(page: Int) = flow {
         val trending = coroutineScope {

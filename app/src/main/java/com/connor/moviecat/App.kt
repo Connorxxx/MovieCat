@@ -6,6 +6,7 @@ import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.connor.moviecat.converter.SerializationConverter
 import com.connor.moviecat.di.appModule
+import com.drake.brv.utils.BRV
 import com.drake.net.NetConfig
 import com.drake.net.cookie.PersistentCookieJar
 import com.drake.net.interceptor.LogRecordInterceptor
@@ -28,6 +29,7 @@ class App : Application() {
         super.onCreate()
         context = applicationContext
         MMKV.initialize(this)
+        BRV.modelId = BR.m
 
         startKoin {
             androidLogger()
