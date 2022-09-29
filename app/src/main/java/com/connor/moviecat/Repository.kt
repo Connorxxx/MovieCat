@@ -1,16 +1,30 @@
 package com.connor.moviecat
 
-import com.connor.moviecat.model.net.ApiPath
-import com.connor.moviecat.model.net.Trending
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import com.connor.moviecat.model.net.*
 import com.drake.logcat.LogCat
 import com.drake.net.Get
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 
-class Repository {
+class Repository(private val tmdbService: TMDBService) {
+
+    companion object {
+        private const val PAGE_SIZE = 50
+    }
+
+    fun getPagingData(): Flow<PagingData<TrendingResult>> {
+        return Pager(
+            config = PagingConfig(PAGE_SIZE),
+            pagingSourceFactory = { RepoPagingSource(tmdbService) }
+        ).flow
+    }
 
     fun getTrending(page: Int) = flow {
         val trending = coroutineScope {
@@ -19,7 +33,7 @@ class Repository {
                 param("page", page)
             }.await()
         }
-        trending.results!!.forEach { emit(it) }
+        trending.results.forEach { emit(it) }
     }
 //        .catch {
 //        LogCat.e("Net Error")

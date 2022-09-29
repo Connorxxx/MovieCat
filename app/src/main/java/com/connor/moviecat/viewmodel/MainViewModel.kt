@@ -1,6 +1,8 @@
 package com.connor.moviecat.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.connor.moviecat.Repository
 import com.connor.moviecat.model.net.TrendingResult
 import kotlinx.coroutines.Dispatchers
@@ -11,6 +13,8 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     val loadList = ArrayList<TrendingResult>()
 
     var page = 1
+
+    fun getPagingData() = repository.getPagingData().cachedIn(viewModelScope)
 
     fun getTrending(page: Int) = repository.getTrending(page)
         .filterNotNull()

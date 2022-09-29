@@ -35,8 +35,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(binding.toolbar)
-        adapter = TrendingAdapter(this@MainActivity, viewModel.loadList)
-        loadTrending(viewModel.page)
+        adapter = TrendingAdapter()
+        lifecycleScope.launch {
+            viewModel.getPagingData().collect {
+                adapter.submitData(it)
+            }
+        }
+       // loadTrending(viewModel.page)
         initViewPager()
         initTab()
     }
@@ -69,15 +74,15 @@ class MainActivity : AppCompatActivity() {
             getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_ALWAYS
             setPageTransformer(getCarouselPagerTransformer())
             adapter = this@MainActivity.adapter
-            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                    if (position == viewModel.loadList.size - 4) {
-                        viewModel.page += 1
-                        loadTrending(viewModel.page)
-                    }
-                }
-            })
+//            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+//                override fun onPageSelected(position: Int) {
+//                    super.onPageSelected(position)
+//                    if (position == viewModel.loadList.size - 4) {
+//                        viewModel.page += 1
+//                        loadTrending(viewModel.page)
+//                    }
+//                }
+//            })
         }
     }
 
