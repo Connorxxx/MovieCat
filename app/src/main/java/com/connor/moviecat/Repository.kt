@@ -20,6 +20,11 @@ class Repository(private val tmdbService: TMDBService) {
             pagingSourceFactory = { RepoPagingSource(tmdbService) }
         ).flow
 
+    fun getMoviePagingData() = Pager(
+        config = PagingConfig(20),
+        pagingSourceFactory = { MoviePagingSource(tmdbService) }
+    ).flow
+
     fun getTrending(page: Int) = flow {
         val trending = coroutineScope {
             Get<Trending>(ApiPath.TRENDING_ALL_WEEK) {

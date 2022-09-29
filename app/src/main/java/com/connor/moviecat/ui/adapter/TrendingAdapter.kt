@@ -53,7 +53,9 @@ class TrendingAdapter : PagingDataAdapter<TrendingResult, TrendingAdapter.ViewHo
         if (repo != null) {
             holder.getBinding().imgLoad.load(
                 "${ImageUtils.IMAGE_API_URL}${repo.posterPath}"
-            )
+            ) {
+                placeholder(R.drawable.placeholder)
+            }
         }
 
 

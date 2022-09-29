@@ -16,6 +16,8 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
 
     fun getPagingData() = repository.getPagingData().cachedIn(viewModelScope)
 
+    fun getMoviePagingData() = repository.getMoviePagingData().cachedIn(viewModelScope)
+
     fun getTrending(page: Int) = repository.getTrending(page)
         .filterNotNull()
         .onEach { loadList.add(it) }

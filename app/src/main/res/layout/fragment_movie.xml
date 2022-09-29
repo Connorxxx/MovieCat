@@ -3,39 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-    </data>
-
-<!--    <androidx.core.widget.NestedScrollView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        tools:context=".ui.MovieFragment">-->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/frameLayout"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dp_16"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/dp_24" />
 
-            <com.drake.brv.PageRefreshLayout
-                android:id="@+id/page"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:stateEnabled="true">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    android:padding="@dimen/dp_16" />
-            </com.drake.brv.PageRefreshLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-<!--    </androidx.core.widget.NestedScrollView>-->
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

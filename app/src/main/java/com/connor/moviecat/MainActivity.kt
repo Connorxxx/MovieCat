@@ -15,7 +15,9 @@ import com.connor.moviecat.ui.TVShowFragment
 import com.connor.moviecat.ui.adapter.TabPagerAdapter
 import com.connor.moviecat.ui.adapter.TrendingAdapter
 import com.connor.moviecat.viewmodel.MainViewModel
+import com.drake.channel.sendTag
 import com.drake.logcat.*
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,7 +43,6 @@ class MainActivity : AppCompatActivity() {
                 adapter.submitData(it)
             }
         }
-       // loadTrending(viewModel.page)
         initViewPager()
         initTab()
     }
@@ -66,6 +67,31 @@ class MainActivity : AppCompatActivity() {
         TabLayoutMediator(binding.tab, binding.pageTab) { tab, position ->
             tab.text = titles[position]
         }.attach()
+        binding.tab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                when (tab?.position) {
+                    0 -> {
+                        if (tab.position == 0)
+                            sendTag("smoothScrollToPosition")
+                        binding.appbar.setExpanded(true)
+                    }
+                    1 -> {
+                        if (tab.position == 1)
+                            sendTag("smoothScrollToPosition")
+                        binding.appbar.setExpanded(true)
+                    }
+                }
+            }
+
+        })
     }
 
     private fun initViewPager() {
@@ -74,15 +100,6 @@ class MainActivity : AppCompatActivity() {
             getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_ALWAYS
             setPageTransformer(getCarouselPagerTransformer())
             adapter = this@MainActivity.adapter
-//            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-//                override fun onPageSelected(position: Int) {
-//                    super.onPageSelected(position)
-//                    if (position == viewModel.loadList.size - 4) {
-//                        viewModel.page += 1
-//                        loadTrending(viewModel.page)
-//                    }
-//                }
-//            })
         }
     }
 

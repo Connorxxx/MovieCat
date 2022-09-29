@@ -1,6 +1,7 @@
 package com.connor.moviecat.di
 
 import com.connor.moviecat.Repository
+import com.connor.moviecat.model.net.MoviePagingSource
 import com.connor.moviecat.model.net.RepoPagingSource
 import com.connor.moviecat.model.net.TMDBService
 import com.connor.moviecat.viewmodel.MainViewModel
@@ -13,5 +14,6 @@ val appModule = module {
     single { TMDBService() }
 
     factory { RepoPagingSource(get()) }
+    factory { MoviePagingSource(get()) }
     viewModel { MainViewModel(get()) }
 }
