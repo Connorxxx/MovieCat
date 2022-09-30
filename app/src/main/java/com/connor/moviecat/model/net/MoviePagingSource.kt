@@ -6,7 +6,6 @@ import java.lang.Exception
 
 class MoviePagingSource(private val tmdbService: TMDBService) : PagingSource<Int, MovieResult>() {
 
-
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieResult> {
         return try {
             val page = params.key ?: 1

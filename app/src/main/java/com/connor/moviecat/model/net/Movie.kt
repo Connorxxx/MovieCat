@@ -33,8 +33,11 @@ data class MovieResult(
     @SerialName("poster_path")
     var posterPath: String = "",
     @SerialName("release_date")
-    var releaseDate: String = "null",
-    var title: String = "null",
+    var releaseDate: String? = null,
+    @SerialName("first_air_date")
+    var firstAirDate: String? = null,
+    var title: String? = null,
+    var name: String? =null,
     var video: Boolean = false,
     @SerialName("vote_average")
     var voteAverage: Double = 1.1,

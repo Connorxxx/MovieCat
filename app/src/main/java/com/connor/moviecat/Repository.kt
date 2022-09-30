@@ -25,16 +25,9 @@ class Repository(private val tmdbService: TMDBService) {
         pagingSourceFactory = { MoviePagingSource(tmdbService) }
     ).flow
 
-    fun getTrending(page: Int) = flow {
-        val trending = coroutineScope {
-            Get<Trending>(ApiPath.TRENDING_ALL_WEEK) {
-                param(ApiPath.API_KEY, ApiPath.API_KEY_VALUE)
-                param("page", page)
-            }.await()
-        }
-        trending.results.forEach { emit(it) }
-    }
-//        .catch {
-//        LogCat.e("Net Error")
-//    }
+    fun getTVPagingData() = Pager(
+        config = PagingConfig(20),
+        pagingSourceFactory = { TVPagingSource(tmdbService) }
+    ).flow
+
 }

@@ -1,6 +1,7 @@
 package com.connor.moviecat
 
 import android.os.Bundle
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -8,7 +9,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
-import androidx.viewpager2.widget.ViewPager2
 import com.connor.moviecat.databinding.ActivityMainBinding
 import com.connor.moviecat.ui.MovieFragment
 import com.connor.moviecat.ui.TVShowFragment
@@ -16,19 +16,16 @@ import com.connor.moviecat.ui.adapter.TabPagerAdapter
 import com.connor.moviecat.ui.adapter.TrendingAdapter
 import com.connor.moviecat.viewmodel.MainViewModel
 import com.drake.channel.sendTag
-import com.drake.logcat.*
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var adapter: TrendingAdapter
+    private lateinit var trendingAdapter: TrendingAdapter
     private lateinit var tabPagerAdapter: TabPagerAdapter
 
     private val viewModel: MainViewModel by viewModel()
@@ -37,14 +34,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(binding.toolbar)
-        adapter = TrendingAdapter()
+        trendingAdapter = TrendingAdapter()
         lifecycleScope.launch {
             viewModel.getPagingData().collect {
-                adapter.submitData(it)
+                trendingAdapter.submitData(it)
             }
         }
         initViewPager()
         initTab()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
     private fun initTab() {
@@ -99,17 +101,7 @@ class MainActivity : AppCompatActivity() {
             offscreenPageLimit = 3
             getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_ALWAYS
             setPageTransformer(getCarouselPagerTransformer())
-            adapter = this@MainActivity.adapter
-        }
-    }
-
-    private fun loadTrending(page: Int) {
-        lifecycleScope.launch {
-            viewModel.getTrending(viewModel.page).collect {
-                withContext(Dispatchers.Main) {
-                    adapter.notifyDataSetChanged()
-                }
-            }
+            adapter = trendingAdapter
         }
     }
 

@@ -3,13 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/hub/MovieCat/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
-        <entry key="..\:/hub/MovieCat/app/src/main/res/layout/fragment_movie.xml" value="0.358695652173913" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.19610507246376813" />
-        <entry key="app/src/main/res/layout/fragment_movie.xml" value="0.13229166666666667" />
-        <entry key="app/src/main/res/layout/fragment_t_v_show.xml" value="0.19610507246376813" />
-        <entry key="app/src/main/res/layout/item_movie.xml" value="0.6026336669921876" />
-        <entry key="app/src/main/res/layout/item_trending.xml" value="0.19610507246376813" />
+        <entry key="..\:/hub/MovieCat/app/src/main/res/layout/activity_main.xml" value="0.18802083333333333" />
+        <entry key="..\:/hub/MovieCat/app/src/main/res/layout/activity_search.xml" value="0.358695652173913" />
+        <entry key="..\:/hub/MovieCat/app/src/main/res/layout/fragment_movie.xml" value="0.18802083333333333" />
+        <entry key="..\:/hub/MovieCat/app/src/main/res/layout/fragment_t_v_show.xml" value="0.358695652173913" />
+        <entry key="..\:/hub/MovieCat/app/src/main/res/layout/item_movie.xml" value="0.18802083333333333" />
+        <entry key="..\:/hub/MovieCat/app/src/main/res/layout/item_trending.xml" value="0.358695652173913" />
+        <entry key="..\:/hub/MovieCat/app/src/main/res/menu/toolbar.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

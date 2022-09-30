@@ -19,4 +19,11 @@ class TMDBService {
             param("page", page)
         }.await()
     }
+
+    suspend fun getTv(page: Int) = coroutineScope {
+        Get<Movie>(ApiPath.TV) {
+            param(ApiPath.API_KEY, ApiPath.API_KEY_VALUE)
+            param("page", page)
+        }.await()
+    }
 }
