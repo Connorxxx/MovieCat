@@ -18,8 +18,8 @@
         android:theme="@style/Theme.MovieCat"
         tools:targetApi="31">
         <activity
-            android:name=".SearchActivity"
-            android:exported="false" />
+            android:name=".ui.SearchActivity"
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

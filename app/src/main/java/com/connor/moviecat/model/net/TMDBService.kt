@@ -26,4 +26,12 @@ class TMDBService {
             param("page", page)
         }.await()
     }
+
+    suspend fun getSearch(query: String, page: Int) = coroutineScope {
+        Get<Movie>(ApiPath.SEARCH_MULTI) {
+            param(ApiPath.API_KEY, ApiPath.API_KEY_VALUE)
+            param("query", query)
+            param("page", page)
+        }.await()
+    }
 }

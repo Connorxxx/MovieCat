@@ -30,4 +30,8 @@ class Repository(private val tmdbService: TMDBService) {
         pagingSourceFactory = { TVPagingSource(tmdbService) }
     ).flow
 
+    fun getSearchPagingData(query: String) = Pager(
+        config = PagingConfig(20),
+        pagingSourceFactory = { SearchPagingSource(tmdbService, query) }
+    ).flow
 }

@@ -15,4 +15,6 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     fun getMoviePagingData() = repository.getMoviePagingData().cachedIn(viewModelScope)
 
     fun getTVPagingData() = repository.getTVPagingData().cachedIn(viewModelScope)
+
+    fun getSearchPagingData(query: String) = repository.getSearchPagingData(query).cachedIn(viewModelScope)
 }

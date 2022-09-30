@@ -2,6 +2,7 @@ package com.connor.moviecat
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -11,9 +12,11 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import com.connor.moviecat.databinding.ActivityMainBinding
 import com.connor.moviecat.ui.MovieFragment
+import com.connor.moviecat.ui.SearchActivity
 import com.connor.moviecat.ui.TVShowFragment
 import com.connor.moviecat.ui.adapter.TabPagerAdapter
 import com.connor.moviecat.ui.adapter.TrendingAdapter
+import com.connor.moviecat.utlis.Tools
 import com.connor.moviecat.viewmodel.MainViewModel
 import com.drake.channel.sendTag
 import com.google.android.material.tabs.TabLayout
@@ -47,6 +50,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.search -> {
+                Tools.startActivity<SearchActivity>(this) {}
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun initTab() {

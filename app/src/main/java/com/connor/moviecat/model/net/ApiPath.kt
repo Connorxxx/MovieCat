@@ -10,4 +10,6 @@ object ApiPath {
     const val MOVIE = "movie/popular"
 
     const val TV = "tv/popular"
+
+    const val SEARCH_MULTI = "search/multi"
 }
