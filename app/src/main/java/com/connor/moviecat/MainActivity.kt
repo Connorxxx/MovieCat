@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import com.connor.moviecat.databinding.ActivityMainBinding
+import com.connor.moviecat.model.net.ApiPath
 import com.connor.moviecat.ui.MovieFragment
 import com.connor.moviecat.ui.SearchActivity
 import com.connor.moviecat.ui.TVShowFragment
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         trendingAdapter = TrendingAdapter()
         lifecycleScope.launch {
-            viewModel.getPagingData().collect {
+            viewModel.getPagingData(ApiPath.TRENDING_ALL_WEEK).collect {
                 trendingAdapter.submitData(it)
             }
         }

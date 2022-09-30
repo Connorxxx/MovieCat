@@ -11,9 +11,6 @@ val appModule = module {
     single { Repository(get()) }
     single { TMDBService() }
 
-    factory { RepoPagingSource(get()) }
-    factory { MoviePagingSource(get()) }
-    factory { TVPagingSource(get()) }
-    factory { (string: String) -> SearchPagingSource(get(), string) }
+    factory { (path: String) -> RepoPagingSource(get(), path) }
     viewModel { MainViewModel(get()) }
 }

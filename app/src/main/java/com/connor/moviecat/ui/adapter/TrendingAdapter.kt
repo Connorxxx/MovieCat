@@ -1,6 +1,5 @@
 package com.connor.moviecat.ui.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -10,18 +9,18 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.connor.moviecat.R
 import com.connor.moviecat.databinding.ItemTrendingBinding
-import com.connor.moviecat.model.net.TrendingResult
+import com.connor.moviecat.model.net.MovieResult
 import com.connor.moviecat.utlis.ImageUtils
 
-class TrendingAdapter : PagingDataAdapter<TrendingResult, TrendingAdapter.ViewHolder>(COMPARATOR) {
+class TrendingAdapter : PagingDataAdapter<MovieResult, TrendingAdapter.ViewHolder>(COMPARATOR) {
 
     companion object {
-        private val COMPARATOR = object : DiffUtil.ItemCallback<TrendingResult>() {
-            override fun areItemsTheSame(oldItem: TrendingResult, newItem: TrendingResult): Boolean {
+        private val COMPARATOR = object : DiffUtil.ItemCallback<MovieResult>() {
+            override fun areItemsTheSame(oldItem: MovieResult, newItem: MovieResult): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: TrendingResult, newItem: TrendingResult): Boolean {
+            override fun areContentsTheSame(oldItem: MovieResult, newItem: MovieResult): Boolean {
                 return oldItem == newItem
             }
         }
@@ -46,9 +45,6 @@ class TrendingAdapter : PagingDataAdapter<TrendingResult, TrendingAdapter.ViewHo
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        holder.getBinding().results = trendingResults[position]
-//        val load = trendingResults[position]
-
         val repo = getItem(position)
         if (repo != null) {
             holder.getBinding().imgLoad.load(
@@ -57,10 +53,5 @@ class TrendingAdapter : PagingDataAdapter<TrendingResult, TrendingAdapter.ViewHo
                 placeholder(R.drawable.placeholder)
             }
         }
-
-
     }
-
-   // override fun getItemCount() = trendingResults.size
-
 }

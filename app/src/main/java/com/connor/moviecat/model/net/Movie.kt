@@ -1,20 +1,18 @@
 package com.connor.moviecat.model.net
 
 
-import com.drake.brv.item.ItemPosition
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class Movie(
-    override var itemPosition: Int = 1,
     var page: Int = 1,
     var results: List<MovieResult> = listOf(),
     @SerialName("total_pages")
     var totalPages: Int = 1,
     @SerialName("total_results")
     var totalResults: Int = 1
-) : ItemPosition
+)
 
 @Serializable
 data class MovieResult(

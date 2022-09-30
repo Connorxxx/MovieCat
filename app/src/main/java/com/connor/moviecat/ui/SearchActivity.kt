@@ -1,28 +1,27 @@
 package com.connor.moviecat.ui
 
 import android.content.Context
-import android.hardware.input.InputManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.connor.moviecat.R
 import com.connor.moviecat.databinding.ActivitySearchBinding
-import com.connor.moviecat.ui.adapter.SearchAdapter
+import com.connor.moviecat.model.net.ApiPath
+import com.connor.moviecat.ui.adapter.FooterAdapter
+import com.connor.moviecat.ui.adapter.MovieAdapter
 import com.connor.moviecat.utlis.showSnackBar
 import com.connor.moviecat.viewmodel.MainViewModel
-import com.drake.channel.receiveTag
-import com.drake.channel.sendTag
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchActivity : AppCompatActivity() {
 
-    private lateinit var searchAdapter: SearchAdapter
+    private lateinit var searchAdapter: MovieAdapter
 
     private val viewModel: MainViewModel by viewModel()
 
@@ -38,8 +37,10 @@ class SearchActivity : AppCompatActivity() {
         }
         val layoutManager = GridLayoutManager(this, 2)
         binding.rv.layoutManager = layoutManager
-        searchAdapter = SearchAdapter()
-        binding.rv.adapter = searchAdapter
+        searchAdapter = MovieAdapter()
+        binding.rv.adapter = searchAdapter.withLoadStateFooter(
+            FooterAdapter{ searchAdapter.retry() }
+        )
         initEditText()
     }
 
@@ -61,7 +62,7 @@ class SearchActivity : AppCompatActivity() {
             setOnEditorActionListener { textView, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_SEARCH && textView.text.isNotBlank()) {
                     lifecycleScope.launch {
-                        viewModel.getSearchPagingData(textView.text.toString()).collect {
+                        viewModel.getPagingData(ApiPath.SEARCH_MULTI, textView.text.toString()).collect {
                             searchAdapter.submitData(it)
                         }
                     }

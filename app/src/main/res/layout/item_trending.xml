@@ -7,7 +7,7 @@
 
         <variable
             name="results"
-            type="com.connor.moviecat.model.net.TrendingResult" />
+            type="com.connor.moviecat.model.net.MovieResult" />
     </data>
 
 
