@@ -31,7 +31,7 @@ data class MovieResult(
     var overview: String = "",
     var popularity: Double = 1.1,
     @SerialName("poster_path")
-    var posterPath: String = "",
+    var posterPath: String? = null,
     @SerialName("release_date")
     var releaseDate: String? = null,
     @SerialName("first_air_date")
@@ -40,7 +40,7 @@ data class MovieResult(
     var name: String? =null,
     var video: Boolean = false,
     @SerialName("vote_average")
-    var voteAverage: Double = 1.1,
+    var voteAverage: Double = 0.0,
     @SerialName("vote_count")
-    var voteCount: Int = 1
+    var voteCount: Int = 0
 )

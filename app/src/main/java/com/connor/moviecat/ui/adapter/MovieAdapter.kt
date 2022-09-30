@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.connor.moviecat.R
 import com.connor.moviecat.databinding.ItemMovieBinding
-import com.connor.moviecat.databinding.ItemTrendingBinding
 import com.connor.moviecat.model.net.MovieResult
 import com.connor.moviecat.utlis.ImageUtils
 
@@ -56,6 +55,4 @@ class MovieAdapter : PagingDataAdapter<MovieResult, MovieAdapter.ViewHolder>(COM
             }
         }
     }
-
-
 }
