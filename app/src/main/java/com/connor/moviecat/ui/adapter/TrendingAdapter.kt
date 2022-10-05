@@ -69,10 +69,6 @@ class TrendingAdapter(private val ctx: Context) : PagingDataAdapter<MovieUiResul
                 R.drawable.placeholder,
                 R.drawable.placeholder
             )
-
-//                .load(
-//                "${ImageUtils.IMAGE_API_URL}${repo.posterPath}"
-//            )
         }
     }
 }

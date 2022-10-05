@@ -10,12 +10,14 @@ import kotlin.math.roundToInt
 object ModelMapper {
 
     fun toDetailUiModel(detail: Detail) = DetailUiModel(
+        id = detail.id ?: 1,
         title = getTitle(detail.title, detail.name),
         releaseOrFirstAirDate = getFormattedDate(detail.releaseDate, detail.firstAirDate),
         runtime = getRuntimeOrSeasons(detail.runtime, detail.NumberOfSeasons).toString(),  //detail.runtime?.let { getRuntime(it) },
         voteAverage = text(detail.voteAverage ?: 0.0),
         tagline = detail.tagline ?: "",
-        overview = detail.overview ?: ""
+        overview = detail.overview ?: "",
+        homepage = detail.homepage
     )
 
     private fun text(double: Double) = BigDecimal(double).setScale(1,BigDecimal.ROUND_HALF_UP).toDouble()
@@ -23,7 +25,7 @@ object ModelMapper {
 
     fun toMovieUiResult(result: MovieResult) = MovieUiResult(
         id = result.id,
-        posterPath = result.posterPath ?: "",
+        posterPath = result.posterPath,
         mediaType = result.mediaType ?: "movie",
         title = getTitle(result.title, result.name),
         releaseOrFirstAirDate = getDate(result.releaseDate, result.firstAirDate),

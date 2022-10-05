@@ -11,8 +11,17 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
     </style>
+
     <style name="Image">
         <item name="android:foreground">?android:selectableItemBackground</item>
         <item name="android:clickable">true</item>
     </style>
+
+    <style name="ImageButton">
+        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:padding">4dp</item>
+    </style>
+
 </resources>

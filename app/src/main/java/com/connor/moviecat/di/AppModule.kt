@@ -8,6 +8,7 @@ import com.connor.moviecat.model.DetailRepository
 import com.connor.moviecat.model.Repository
 import com.connor.moviecat.model.net.ApiPath
 import com.connor.moviecat.model.net.RepoPagingSource
+import com.connor.moviecat.model.room.MovieDataBase
 import com.connor.moviecat.viewmodel.DetailViewModel
 import com.connor.moviecat.viewmodel.MainViewModel
 import com.drake.net.cookie.PersistentCookieJar
@@ -22,16 +23,20 @@ import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 import okhttp3.Cache
+import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import java.util.concurrent.TimeUnit
 
 val appModule = module {
 
+    single { MovieDataBase.getDataBase(androidApplication()) }
+    single { get<MovieDataBase>().moviesDao() }
+
     single { Repository(get()) }
     single { DetailRepository(get()) }
     single { client(get()) }
-    single { (path: String) -> RepoPagingSource(get(), path) }
+    //single { (path: String) -> RepoPagingSource(get(), path) }
     viewModel { MainViewModel(get()) }
     viewModel { DetailViewModel(get()) }
 

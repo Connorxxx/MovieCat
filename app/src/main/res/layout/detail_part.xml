@@ -103,26 +103,27 @@
             app:layout_constraintTop_toTopOf="@+id/linearLayout2">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/homepage"
+                style="@style/ImageButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="6dp"
+                android:visibility="@{TextUtils.isEmpty(model.homepage) ? View.GONE : View.VISIBLE}"
                 app:srcCompat="@drawable/outline_other_houses_24" />
 
             <ImageView
                 android:id="@+id/imageView3"
+                style="@style/ImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:padding="6dp"
                 app:srcCompat="@drawable/ic_baseline_open_in_new_24" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/addDatabase"
+                style="@style/ImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:padding="6dp"
                 app:srcCompat="@drawable/ic_baseline_bookmark_border_24" />
         </LinearLayout>
 

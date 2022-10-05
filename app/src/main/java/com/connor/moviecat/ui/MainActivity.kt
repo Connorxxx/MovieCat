@@ -1,25 +1,17 @@
-package com.connor.moviecat
+package com.connor.moviecat.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
+import com.connor.moviecat.R
 import com.connor.moviecat.contract.Event
 import com.connor.moviecat.databinding.ActivityMainBinding
 import com.connor.moviecat.model.net.ApiPath
-import com.connor.moviecat.tag.Tag
-import com.connor.moviecat.ui.MovieFragment
-import com.connor.moviecat.ui.SearchActivity
-import com.connor.moviecat.ui.TVShowFragment
 import com.connor.moviecat.ui.adapter.TabPagerAdapter
 import com.connor.moviecat.ui.adapter.TrendingAdapter
 import com.connor.moviecat.utlis.Tools
@@ -80,13 +72,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             tab.text = viewModel.titles[position]
         }.attach()
         binding.tab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
+            override fun onTabSelected(tab: TabLayout.Tab?) {}
 
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-
-            }
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
@@ -102,7 +90,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     }
                 }
             }
-
         })
     }
 

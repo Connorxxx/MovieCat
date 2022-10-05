@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import androidx.paging.filter
 import androidx.paging.map
 import com.connor.moviecat.model.Repository
 import com.connor.moviecat.contract.Event
@@ -46,7 +47,10 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
         repository.getSearchPagingData(path, query)
             .map { pagingResult ->
                 pagingResult.map { ModelMapper.toMovieUiResult(it) }
-            }.cachedIn(viewModelScope)
+                    .filter { it.posterPath != null }
+                    .filter { it.releaseOrFirstAirDate.length >= 4 }
+            }
+            .cachedIn(viewModelScope)
 
     override fun onCleared() {
         super.onCleared()

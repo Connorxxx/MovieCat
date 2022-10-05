@@ -10,7 +10,7 @@ data class Detail(
     @SerialName("backdrop_path")
     var backdropPath: String? = null,
     var budget: Int? = null,
-    var homepage: String? = null,
+    var homepage: String = "",
     var id: Int? = null,
     @SerialName("imdb_id")
     var imdbId: String? = null,

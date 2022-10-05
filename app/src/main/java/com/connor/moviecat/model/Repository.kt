@@ -17,8 +17,5 @@ class Repository(private val client: HttpClient) {
     fun getSearchPagingData(path: String, query: String) = Pager(
         config = PagingConfig(20),
         pagingSourceFactory = { SearchPagingSource(client, path, query) }
-    ).flow.map { pagingData ->
-        pagingData.filter { it.posterPath != null }
-            .filter { it.releaseDate?.length != 0 && it.firstAirDate?.length != 0 }
-    }
+    ).flow
 }

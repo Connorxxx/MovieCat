@@ -11,7 +11,10 @@ import com.connor.moviecat.BaseActivity
 import com.connor.moviecat.R
 import com.connor.moviecat.databinding.ActivityDetailBinding
 import com.connor.moviecat.model.net.Detail
+import com.connor.moviecat.model.room.MovieDao
+import com.connor.moviecat.model.room.MovieEntity
 import com.connor.moviecat.utlis.ImageUtils
+import com.connor.moviecat.utlis.Tools.openLink
 import com.connor.moviecat.utlis.loadWithQuality
 import com.connor.moviecat.viewmodel.DetailViewModel
 import io.ktor.client.*
@@ -30,6 +33,7 @@ class DetailActivity : BaseActivity(R.layout.activity_detail) {
     private val binding by lazy { ActivityDetailBinding.inflate(layoutInflater) }
 
     private val viewModel by inject<DetailViewModel>()
+    private val movieDao by inject<MovieDao>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +47,24 @@ class DetailActivity : BaseActivity(R.layout.activity_detail) {
             R.drawable.placeholder,
             R.drawable.placeholder
         )
+        binding.detailPart.homepage.setOnClickListener {
+            openLink(binding.detailPart.model!!.homepage, this, binding.imgPoster)
+        }
+        binding.detailPart.addDatabase.setOnClickListener {
+            with(binding.detailPart.model!!) {
+                val moves = MovieEntity(
+                    id,
+                    posterPath!!,
+                    title,
+                    releaseOrFirstAirDate,
+                    voteAverage
+                )
+                lifecycleScope.launch {
+                    movieDao.insertMovie(moves)
+                }
+            }
+
+        }
         lifecycleScope.launch(Dispatchers.IO) {
             viewModel.detail(
                 intent.getStringExtra("media_type")!!,
