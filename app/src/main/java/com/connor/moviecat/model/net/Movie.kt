@@ -34,6 +34,8 @@ data class MovieResult(
     var releaseDate: String? = null,
     @SerialName("first_air_date")
     var firstAirDate: String? = null,
+    @SerialName("media_type")
+    var mediaType: String? = null,
     var title: String? = null,
     var name: String? =null,
     var video: Boolean = false,

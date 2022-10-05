@@ -9,13 +9,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.connor.moviecat.R
-import com.connor.moviecat.databinding.ItemMovieBinding
+import com.connor.moviecat.databinding.ItemSearchBinding
 import com.connor.moviecat.model.net.MovieUiResult
 import com.connor.moviecat.ui.DetailActivity
 import com.connor.moviecat.utlis.ImageUtils
 import com.connor.moviecat.utlis.startActivity
 
-class MovieAdapter(private val ctx: Context, val media: String) : PagingDataAdapter<MovieUiResult, MovieAdapter.ViewHolder>(COMPARATOR) {
+class SearchAdapter(private val ctx: Context) : PagingDataAdapter<MovieUiResult, SearchAdapter.ViewHolder>(COMPARATOR) {
 
     companion object {
         private val COMPARATOR = object : DiffUtil.ItemCallback<MovieUiResult>() {
@@ -29,17 +29,17 @@ class MovieAdapter(private val ctx: Context, val media: String) : PagingDataAdap
         }
     }
 
-    inner class ViewHolder(private val binding: ItemMovieBinding)
+    inner class ViewHolder(private val binding: ItemSearchBinding)
         : RecyclerView.ViewHolder(binding.root) {
-        fun getBinding(): ItemMovieBinding {
+        fun getBinding(): ItemSearchBinding {
             return binding
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemMovieBinding = DataBindingUtil.inflate(
+        val binding: ItemSearchBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.item_movie,
+            R.layout.item_search,
             parent,
             false
         )
@@ -48,7 +48,7 @@ class MovieAdapter(private val ctx: Context, val media: String) : PagingDataAdap
             startActivity<DetailActivity>(ctx) {
                 with(holder.getBinding().m!!) {
                     putExtra("movie_id", id.toString())
-                    putExtra("media_type", media)
+                    putExtra("media_type", mediaType)
                     putExtra("poster_path",posterPath)
                 }
             }

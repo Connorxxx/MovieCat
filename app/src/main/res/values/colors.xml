@@ -8,6 +8,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="colorPrimary">#33000000</color>
+    <color name="colorPrimaryDark">#33000000</color>
+    <color name="colorAccent">#FFC400</color>
+    <color name="lightColorPrimary">#4285F4</color>
+    <color name="lightColorPrimaryDark">#3367D6</color>
+    <color name="colorStatusDark">#1F000000</color>
+
     <!-- common colors -->
     <color name="search_toolbar">#EBEEF6</color>
     <color name="navigationBar">#FAFAFA</color>

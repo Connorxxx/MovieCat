@@ -39,6 +39,19 @@
                 android:adjustViewBounds="true"
                 app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
                 tools:srcCompat="@tools:sample/avatars" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="@color/black"
+                android:text="@{m.mediaType}"
+                android:textColor="@color/white"
+                app:chipCornerRadius="@dimen/dp_24"
+                app:chipStrokeWidth="@dimen/dp_0"
+                tools:text="Movie" />
+
         </com.google.android.material.card.MaterialCardView>
 
         <TextView
@@ -78,5 +91,6 @@
             app:layout_constraintStart_toEndOf="@+id/tvVote"
             app:layout_constraintTop_toBottomOf="@+id/tvName"
             tools:text="2022" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

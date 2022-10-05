@@ -2,5 +2,17 @@
 <resources>
     <style name="ThemePrimary" parent="">
         <item name="colorPrimary">@color/google_blue</item>
+        <item name="colorPrimaryVariant">@color/google_red</item>
+        <item name="colorOnPrimary">@color/google_yellow</item>
+        <item name="colorPrimaryDark">@color/google_green</item>
+        <item name="colorAccent">@color/black</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+    </style>
+    <style name="Image">
+        <item name="android:foreground">?android:selectableItemBackground</item>
+        <item name="android:clickable">true</item>
     </style>
 </resources>

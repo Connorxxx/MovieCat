@@ -38,10 +38,12 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def lifecycle_version = "2.5.1"
     def room_version = "2.4.3"
     def koin_version= "3.2.2"
     def paging_version = "3.1.1"
+    def ktor_version= "2.1.2"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
@@ -58,6 +60,13 @@ dependencies {
     implementation "androidx.paging:paging-runtime:$paging_version"
     implementation "io.insert-koin:koin-core:$koin_version"
     implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.ktor:ktor-client-core:$ktor_version"
+    implementation "io.ktor:ktor-client-cio:$ktor_version"
+    implementation "io.ktor:ktor-client-okhttp:$ktor_version"
+    implementation "io.ktor:ktor-client-android:$ktor_version"
+    implementation "io.ktor:ktor-client-encoding:$ktor_version"
+    implementation "io.ktor:ktor-client-content-negotiation:$ktor_version"
+    implementation "io.ktor:ktor-serialization-kotlinx-json:$ktor_version"
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
     implementation "io.coil-kt:coil:2.2.0"
     implementation 'com.github.liangjingkanji:Engine:0.0.68'

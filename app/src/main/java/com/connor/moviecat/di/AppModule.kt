@@ -1,16 +1,85 @@
 package com.connor.moviecat.di
 
-import com.connor.moviecat.Repository
-import com.connor.moviecat.model.net.*
+import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerCollector
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.connor.moviecat.BuildConfig
+import com.connor.moviecat.model.DetailRepository
+import com.connor.moviecat.model.Repository
+import com.connor.moviecat.model.net.ApiPath
+import com.connor.moviecat.model.net.RepoPagingSource
+import com.connor.moviecat.viewmodel.DetailViewModel
 import com.connor.moviecat.viewmodel.MainViewModel
+import com.drake.net.cookie.PersistentCookieJar
+import com.drake.net.interceptor.LogRecordInterceptor
+import com.drake.net.okhttp.setDebug
+import io.ktor.client.*
+import io.ktor.client.engine.okhttp.*
+import io.ktor.client.plugins.*
+import io.ktor.client.plugins.compression.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.*
+import kotlinx.serialization.json.Json
+import okhttp3.Cache
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import java.util.concurrent.TimeUnit
 
 val appModule = module {
 
     single { Repository(get()) }
-    single { TMDBService() }
-
-    factory { (path: String) -> RepoPagingSource(get(), path) }
+    single { DetailRepository(get()) }
+    single { client(get()) }
+    single { (path: String) -> RepoPagingSource(get(), path) }
     viewModel { MainViewModel(get()) }
+    viewModel { DetailViewModel(get()) }
+
+}
+
+fun client(context: Context) = HttpClient(OkHttp) {
+    defaultRequest {
+        url {
+            protocol = URLProtocol.HTTPS
+            host = "api.themoviedb.org"
+            path("3/")
+            parameters.append(ApiPath.API_KEY, ApiPath.API_KEY_VALUE)
+           // parameters.append("language", "en")
+        }
+    }
+    engine {
+        threadsCount = 16
+        clientCacheSize = 1024 * 1204 * 128
+        config {
+            connectTimeout(30, TimeUnit.SECONDS)
+            readTimeout(30, TimeUnit.SECONDS)
+            writeTimeout(30, TimeUnit.SECONDS)
+            cache(Cache(context.cacheDir, 1024 * 1204 * 128))
+            setDebug(BuildConfig.DEBUG)
+           // addInterceptor(LogRecordInterceptor(BuildConfig.DEBUG))
+           // cookieJar(PersistentCookieJar(context))
+            if (BuildConfig.DEBUG) {
+                addInterceptor(
+                    ChuckerInterceptor.Builder(context)
+                        .collector(ChuckerCollector(context))
+                        .maxContentLength(250000L)
+                        .redactHeaders(emptySet())
+                        .alwaysReadResponseBody(false)
+                        .build()
+                )
+            }
+        }
+    }
+    install(ContentEncoding) {
+        deflate(1.0F)
+        gzip(0.9F)
+    }
+    install(ContentNegotiation) {
+        json(Json {
+            ignoreUnknownKeys = true
+            coerceInputValues = true
+            prettyPrint = true
+            isLenient = true
+        })
+    }
 }

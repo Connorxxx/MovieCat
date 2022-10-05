@@ -1,17 +1,22 @@
 package com.connor.moviecat
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
+import com.connor.moviecat.contract.Event
 import com.connor.moviecat.databinding.ActivityMainBinding
 import com.connor.moviecat.model.net.ApiPath
+import com.connor.moviecat.tag.Tag
 import com.connor.moviecat.ui.MovieFragment
 import com.connor.moviecat.ui.SearchActivity
 import com.connor.moviecat.ui.TVShowFragment
@@ -26,19 +31,19 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
-    private lateinit var binding: ActivityMainBinding
     private lateinit var trendingAdapter: TrendingAdapter
     private lateinit var tabPagerAdapter: TabPagerAdapter
+    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     private val viewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-        trendingAdapter = TrendingAdapter()
+        trendingAdapter = TrendingAdapter(this)
         lifecycleScope.launch {
             viewModel.getPagingData(ApiPath.TRENDING_ALL_WEEK).collect {
                 trendingAdapter.submitData(it)
@@ -63,24 +68,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initTab() {
-        val titles = ArrayList<String>().apply {
-            add("Movie")
-            add("TV Show")
-        }
-        val fragments = ArrayList<Fragment>().apply {
-            add(MovieFragment())
-            add(TVShowFragment())
-        }
         tabPagerAdapter = TabPagerAdapter(
             supportFragmentManager,
             lifecycle,
-            fragments,
-            titles
+            viewModel.fragments,
+            viewModel.titles
         )
         binding.pageTab.adapter = tabPagerAdapter
         binding.pageTab.offscreenPageLimit = 2
         TabLayoutMediator(binding.tab, binding.pageTab) { tab, position ->
-            tab.text = titles[position]
+            tab.text = viewModel.titles[position]
         }.attach()
         binding.tab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -95,12 +92,12 @@ class MainActivity : AppCompatActivity() {
                 when (tab?.position) {
                     0 -> {
                         if (tab.position == 0)
-                            sendTag("smoothScrollToPosition")
+                            viewModel.sendEvent(Event.Scroll)
                         binding.appbar.setExpanded(true)
                     }
                     1 -> {
                         if (tab.position == 1)
-                            sendTag("smoothScrollToPosition")
+                            viewModel.sendEvent(Event.Scroll)
                         binding.appbar.setExpanded(true)
                     }
                 }

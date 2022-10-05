@@ -2,8 +2,10 @@ package com.connor.moviecat
 
 import android.app.Application
 import android.content.Context
+import androidx.lifecycle.viewModelScope
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.connor.moviecat.contract.Event
 import com.connor.moviecat.converter.SerializationConverter
 import com.connor.moviecat.di.appModule
 import com.drake.brv.utils.BRV
@@ -13,6 +15,11 @@ import com.drake.net.interceptor.LogRecordInterceptor
 import com.drake.net.okhttp.setConverter
 import com.drake.net.okhttp.setDebug
 import com.tencent.mmkv.MMKV
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 import okhttp3.Cache
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
