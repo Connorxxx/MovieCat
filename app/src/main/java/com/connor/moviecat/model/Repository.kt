@@ -5,7 +5,11 @@ import androidx.paging.PagingConfig
 import androidx.paging.filter
 import com.connor.moviecat.model.net.*
 import io.ktor.client.*
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.sample
 
 class Repository(private val client: HttpClient) {
 

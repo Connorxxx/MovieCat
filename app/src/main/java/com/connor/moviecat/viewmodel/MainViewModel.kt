@@ -49,8 +49,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
                 pagingResult.map { ModelMapper.toMovieUiResult(it) }
                     .filter { it.posterPath != null }
                     .filter { it.releaseOrFirstAirDate.length >= 4 }
-            }
-            .cachedIn(viewModelScope)
+            }.cachedIn(viewModelScope)
 
     override fun onCleared() {
         super.onCleared()
