@@ -3,12 +3,9 @@ package com.connor.moviecat.model.net
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.connor.moviecat.utlis.fire
-import com.drake.logcat.LogCat
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.isActive
 
 class SearchPagingSource(
     private val client: HttpClient,

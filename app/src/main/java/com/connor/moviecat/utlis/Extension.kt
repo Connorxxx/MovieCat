@@ -40,8 +40,7 @@ fun EditText.textChanges() = callbackFlow {
         }
 
         override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            trySend(p0)
-            Log.d("textChanges", "onTextChanged: ")
+            p0?.let { trySend(it) }
         }
 
         override fun afterTextChanged(p0: Editable?) {
@@ -51,7 +50,6 @@ fun EditText.textChanges() = callbackFlow {
     addTextChangedListener(listener)
     awaitClose {
         removeTextChangedListener(listener)
-        Log.d("textChanges", "textChanges: close")
     }
 }
 

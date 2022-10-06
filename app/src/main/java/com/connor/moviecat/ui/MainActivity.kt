@@ -79,12 +79,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             override fun onTabReselected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
                     0 -> {
-                        if (tab.position == 0)
+                        //if (tab.position == 0)
                             viewModel.sendEvent(Event.Scroll)
                         binding.appbar.setExpanded(true)
                     }
                     1 -> {
-                        if (tab.position == 1)
+                       // if (tab.position == 1)
                             viewModel.sendEvent(Event.Scroll)
                         binding.appbar.setExpanded(true)
                     }
