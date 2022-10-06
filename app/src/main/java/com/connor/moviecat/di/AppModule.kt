@@ -34,7 +34,7 @@ val appModule = module {
     single { get<MovieDataBase>().moviesDao() }
 
     single { Repository(get()) }
-    single { DetailRepository(get()) }
+    single { DetailRepository(get(), get()) }
     single { client(get()) }
     //single { (path: String) -> RepoPagingSource(get(), path) }
     viewModel { MainViewModel(get()) }

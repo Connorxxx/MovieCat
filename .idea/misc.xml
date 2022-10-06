@@ -10,6 +10,7 @@
         <entry key="app/src/main/res/drawable/ic_baseline_open_in_new_24.xml" value="0.1915" />
         <entry key="app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.1455" />
         <entry key="app/src/main/res/drawable/ic_detail_back.xml" value="0.1455" />
+        <entry key="app/src/main/res/drawable/outline_bookmark_24.xml" value="0.1425" />
         <entry key="app/src/main/res/drawable/outline_other_houses_24.xml" value="0.1455" />
         <entry key="app/src/main/res/layout/activity_detail.xml" value="0.4387945866239244" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19610507246376813" />

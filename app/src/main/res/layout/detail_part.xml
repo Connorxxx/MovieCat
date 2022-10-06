@@ -95,34 +95,34 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{TextUtils.isEmpty(model.title) ? View.GONE : View.VISIBLE}"
+            android:visibility="@{TextUtils.isEmpty(model.title) ? View.INVISIBLE : View.VISIBLE}"
             android:layout_marginEnd="32dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/linearLayout2">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/homepage"
                 style="@style/ImageButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="@{TextUtils.isEmpty(model.homepage) ? View.GONE : View.VISIBLE}"
+                android:visibility="@{TextUtils.isEmpty(model.homepage) ? View.INVISIBLE : View.VISIBLE}"
                 app:srcCompat="@drawable/outline_other_houses_24" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imageView3"
                 style="@style/ImageButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
                 app:srcCompat="@drawable/ic_baseline_open_in_new_24" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/addDatabase"
                 style="@style/ImageButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
                 app:srcCompat="@drawable/ic_baseline_bookmark_border_24" />
         </LinearLayout>
@@ -155,16 +155,16 @@
             <TextView
                 android:id="@+id/textView2"
                 style="@style/TextAppearance.MaterialComponents.Subtitle1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:text="@{String.format(@string/date, model.releaseOrFirstAirDate)}"
                 tools:text="(2022)" />
 
             <TextView
                 android:id="@+id/textView8"
                 style="@style/TextAppearance.MaterialComponents.Subtitle1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginStart="4dp"
                 android:text="@{model.runtime}"
                 tools:text="1 h 30 min" />
@@ -203,6 +203,7 @@
             style="@style/TextAppearance.MaterialComponents.Headline6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
             android:text="Overview"
             android:textSize="32sp"
@@ -215,12 +216,13 @@
             style="@style/TextAppearance.MaterialComponents.Subtitle1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
             android:lineSpacingMultiplier="0.9"
             android:text="@{model.overview}"
-            android:visibility="@{TextUtils.isEmpty(model.overview) ? View.GONE : View.VISIBLE}"
             android:textSize="18sp"
+            android:visibility="@{TextUtils.isEmpty(model.overview) ? View.GONE : View.VISIBLE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView6"
             app:layout_constraintTop_toBottomOf="@+id/textView6"

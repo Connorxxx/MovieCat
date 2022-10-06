@@ -22,6 +22,8 @@ import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import kotlin.math.floor
@@ -33,7 +35,9 @@ class DetailActivity : BaseActivity(R.layout.activity_detail) {
     private val binding by lazy { ActivityDetailBinding.inflate(layoutInflater) }
 
     private val viewModel by inject<DetailViewModel>()
-    private val movieDao by inject<MovieDao>()
+
+    private val type by lazy { intent.getStringExtra("media_type") ?: "movie" }
+    private val id by lazy { intent.getStringExtra("movie_id") ?: "" }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,27 +55,50 @@ class DetailActivity : BaseActivity(R.layout.activity_detail) {
             openLink(binding.detailPart.model!!.homepage, this, binding.imgPoster)
         }
         binding.detailPart.addDatabase.setOnClickListener {
-            with(binding.detailPart.model!!) {
-                val moves = MovieEntity(
-                    id,
-                    posterPath!!,
-                    title,
-                    releaseOrFirstAirDate,
-                    voteAverage
-                )
-                lifecycleScope.launch {
-                    movieDao.insertMovie(moves)
+            if (!viewModel.inCheck) {
+                with(binding.detailPart.model!!) {
+                    val moves = MovieEntity(
+                        id,
+                        posterPath!!,
+                        title,
+                        releaseOrFirstAirDate,
+                        voteAverage,
+                        type
+                    )
+                    viewModel.insertMovie(moves)
+                    viewModel.inCheck = true
                 }
+            } else {
+                viewModel.deleteMovie(id.toInt())
+                viewModel.inCheck = false
             }
 
         }
-        lifecycleScope.launch(Dispatchers.IO) {
-            viewModel.detail(
-                intent.getStringExtra("media_type")!!,
-                intent.getStringExtra("movie_id")!!
-            ).collect {
+        lifecycleScope.launch {
+            launch {
+                viewModel.insert.collect {
+                    binding.detailPart.addDatabase.load(R.drawable.outline_bookmark_24)
+                }
+            }
+            launch {
+                viewModel.delete.collect {
+                    binding.detailPart.addDatabase.load(R.drawable.ic_baseline_bookmark_border_24)
+                }
+            }
+            launch {
+                viewModel.getMovies.collect {
+                    it.forEach { movie ->
+                        ensureActive()
+                        if (movie.id == id.toInt()) {
+                            binding.detailPart.addDatabase.load(R.drawable.outline_bookmark_24)
+                            viewModel.inCheck = true
+                            this.cancel()
+                        }
+                    }
+                }
+            }
+            viewModel.detail(type, id).collect {
                 binding.detailPart.model = it
-                Log.d(TAG, "onCreate: $it")
             }
         }
     }

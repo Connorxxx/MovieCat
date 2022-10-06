@@ -18,11 +18,8 @@ import com.connor.moviecat.ui.adapter.SearchAdapter
 import com.connor.moviecat.utlis.showSnackBar
 import com.connor.moviecat.utlis.textChanges
 import com.connor.moviecat.viewmodel.MainViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchActivity : BaseActivity(R.layout.activity_search) {
@@ -30,6 +27,7 @@ class SearchActivity : BaseActivity(R.layout.activity_search) {
     private lateinit var searchAdapter: SearchAdapter
 
     private val viewModel: MainViewModel by viewModel()
+    private val default: CoroutineDispatcher by lazy { Dispatchers.Default }
 
     private val binding by lazy { ActivitySearchBinding.inflate(layoutInflater) }
     private val imm by lazy { context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager }
@@ -55,9 +53,7 @@ class SearchActivity : BaseActivity(R.layout.activity_search) {
                     }
             }
             viewModel.paging.collect {
-                launch {
-                    searchAdapter.submitData(it)
-                }
+                launch(default) { searchAdapter.submitData(it) }
             }
         }
     }
@@ -85,13 +81,10 @@ class SearchActivity : BaseActivity(R.layout.activity_search) {
             binding.etSearch.setText("")
         }
         with(binding.etSearch) {
-            postDelayed({
-                requestFocus()
-                imm.showSoftInput(this, 0)
-            }, 200)
+            requestFocus()
+            imm.showSoftInput(this, 0)
             setOnEditorActionListener { textView, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_SEARCH && textView.text.isNotBlank()) {
-                   // viewModel.sendQuery(ApiPath.SEARCH_MULTI, textView.text.toString())
                     imm.hideSoftInputFromWindow(windowToken, 0)
                 } else showSnackBar("Please Input")
                 return@setOnEditorActionListener true

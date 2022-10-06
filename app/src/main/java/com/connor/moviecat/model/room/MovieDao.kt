@@ -10,7 +10,10 @@ import kotlinx.coroutines.flow.Flow
 interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMovie(movie: MovieEntity)
+    suspend fun insertMovie(movie: MovieEntity): Long
+
+    @Query("DELETE FROM movies WHERE id = :id")
+    suspend fun deleteMovie(id: Int): Int
 
     @Query("select * from movies")
     fun loadAllMoves(): Flow<List<MovieEntity>>
