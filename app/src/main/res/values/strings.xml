@@ -5,4 +5,5 @@
     <string name="vote">%1$s ⭐️</string>
     <string name="date">%1$s •</string>
     <string name="user_score">User Score</string>
+    <string name="bookmark">bookmark</string>
 </resources>

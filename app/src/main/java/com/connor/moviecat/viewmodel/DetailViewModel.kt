@@ -13,7 +13,8 @@ import kotlinx.coroutines.launch
 
 class DetailViewModel(private val repository: DetailRepository) : ViewModel() {
 
-    var inCheck = false
+    private val _check = MutableStateFlow(false)
+    val check = _check.asStateFlow()
 
     private val _insert = Channel<Long>()
     val insert = _insert.receiveAsFlow()
@@ -22,6 +23,10 @@ class DetailViewModel(private val repository: DetailRepository) : ViewModel() {
     val delete = _delete.receiveAsFlow()
 
     val getMovies = repository.getMovies()
+
+    fun setCheck(check: Boolean) {
+        _check.value = check
+    }
 
     fun insertMovie(movies: MovieEntity) {
         viewModelScope.launch(Dispatchers.IO) {

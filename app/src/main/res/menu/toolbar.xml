@@ -7,4 +7,9 @@
         android:icon="@drawable/ic_baseline_search_24"
         android:title="@android:string/search_go"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/bookmark"
+        android:icon="@drawable/outline_bookmark_24"
+        android:title="@string/bookmark"
+        app:showAsAction="always" />
 </menu>
