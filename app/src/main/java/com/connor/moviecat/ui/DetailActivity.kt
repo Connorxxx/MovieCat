@@ -8,6 +8,7 @@ import coil.load
 import com.connor.moviecat.BaseActivity
 import com.connor.moviecat.R
 import com.connor.moviecat.databinding.ActivityDetailBinding
+import com.connor.moviecat.model.net.ApiPath
 import com.connor.moviecat.model.room.MovieEntity
 import com.connor.moviecat.utlis.ImageUtils
 import com.connor.moviecat.utlis.Tools.openLink
@@ -53,7 +54,7 @@ class DetailActivity : BaseActivity(R.layout.activity_detail) {
                         title,
                         releaseOrFirstAirDate,
                         voteAverage,
-                        type
+                        type,
                     )
                     viewModel.insertMovie(moves)
                     viewModel.setCheck(true)
@@ -61,6 +62,12 @@ class DetailActivity : BaseActivity(R.layout.activity_detail) {
             } else {
                 viewModel.deleteMovie(id.toInt())
                 viewModel.setCheck(false)
+            }
+        }
+        binding.detailPart.imgRarbg.setOnClickListener {
+            binding.detailPart.model?.let {
+                val path = it.imdbId.ifBlank { it.title }
+                openLink("${ApiPath.RARBG}$path", this, binding.imgPoster)
             }
         }
     }

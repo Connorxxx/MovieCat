@@ -12,4 +12,6 @@ object ApiPath {
     const val TV = "tv/popular"
 
     const val SEARCH_MULTI = "search/multi"
+
+    const val RARBG = "https://rarbg.to/torrents.php?search="
 }

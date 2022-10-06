@@ -11,5 +11,5 @@ data class MovieEntity(
     val title: String,
     val releasedYear: String,
     val voteAverage: Double,
-    val mediaType: String = "movie",
+    val mediaType: String = "movie"
     )

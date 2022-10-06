@@ -8,5 +8,6 @@ data class DetailUiModel(
     val voteAverage: Double,
     val tagline: String,
     val overview: String,
-    val homepage: String
+    val homepage: String,
+    val imdbId: String
 )

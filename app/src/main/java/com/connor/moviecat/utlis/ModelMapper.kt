@@ -17,7 +17,8 @@ object ModelMapper {
         voteAverage = text(detail.voteAverage ?: 0.0),
         tagline = detail.tagline ?: "",
         overview = detail.overview ?: "",
-        homepage = detail.homepage
+        homepage = detail.homepage,
+        imdbId = detail.imdbId ?: ""
     )
 
     private fun text(double: Double) = BigDecimal(double).setScale(1,BigDecimal.ROUND_HALF_UP).toDouble()

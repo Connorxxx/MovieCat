@@ -125,6 +125,14 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
                 app:srcCompat="@drawable/ic_baseline_bookmark_border_24" />
+
+            <ImageView
+                android:id="@+id/imgRarbg"
+                style="@style/ImageButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                app:srcCompat="@drawable/outline_movie_creation_24" />
         </LinearLayout>
 
         <View
