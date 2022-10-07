@@ -5,7 +5,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import coil.load
-import com.connor.moviecat.BaseActivity
+import com.connor.moviecat.common.BaseActivity
 import com.connor.moviecat.R
 import com.connor.moviecat.databinding.ActivityDetailBinding
 import com.connor.moviecat.model.net.ApiPath
@@ -42,32 +42,33 @@ class DetailActivity : BaseActivity(R.layout.activity_detail) {
     }
 
     private fun initClick() {
-        binding.detailPart.homepage.setOnClickListener {
-            openLink(binding.detailPart.model!!.homepage, this, binding.imgPoster)
-        }
-        binding.detailPart.addDatabase.setOnClickListener {
-            if (!viewModel.check.value) {
-                with(binding.detailPart.model!!) {
-                    val moves = MovieEntity(
-                        id,
-                        posterPath,
-                        title,
-                        releaseOrFirstAirDate,
-                        voteAverage,
-                        type,
-                    )
-                    viewModel.insertMovie(moves)
-                    viewModel.setCheck(true)
-                }
-            } else {
-                viewModel.deleteMovie(id.toInt())
-                viewModel.setCheck(false)
+        with(binding.detailPart) {
+            homepage.setOnClickListener {
+                openLink(model!!.homepage, this@DetailActivity, binding.imgPoster)
             }
-        }
-        binding.detailPart.imgRarbg.setOnClickListener {
-            binding.detailPart.model?.let {
-                val path = it.imdbId.ifBlank { it.title }
-                openLink("${ApiPath.RARBG}$path", this, binding.imgPoster)
+            addDatabase.setOnClickListener {
+                if (!viewModel.check.value) {
+                    model!!.apply {
+                        val moves = MovieEntity(
+                            id, posterPath, title, releaseOrFirstAirDate, voteAverage, type
+                        )
+                        viewModel.insertMovie(moves)
+                        viewModel.setCheck(true)
+                    }
+                } else {
+                    viewModel.deleteMovie(id.toInt())
+                    viewModel.setCheck(false)
+                }
+            }
+            imgRarbg.setOnClickListener {
+                model?.let {
+                    val path = it.imdbId.ifBlank { it.title }
+                    openLink(
+                        "${ApiPath.RARBG}$path",
+                        this@DetailActivity,
+                        binding.imgPoster
+                    )
+                }
             }
         }
     }
@@ -100,10 +101,9 @@ class DetailActivity : BaseActivity(R.layout.activity_detail) {
             launch(default) {
                 viewModel.getMovies.collect {
                     it.forEach { movie ->
-                        ensureActive()
                         if (movie.id == id.toInt()) {
                             viewModel.setCheck(true)
-                            this.cancel()
+                            return@forEach
                         }
                     }
                 }

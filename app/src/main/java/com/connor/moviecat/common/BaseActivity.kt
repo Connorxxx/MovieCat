@@ -1,4 +1,4 @@
-package com.connor.moviecat
+package com.connor.moviecat.common
 
 import android.view.MenuItem
 import androidx.annotation.LayoutRes

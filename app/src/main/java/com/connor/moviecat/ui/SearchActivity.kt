@@ -2,14 +2,13 @@ package com.connor.moviecat.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.MotionEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.connor.moviecat.App.Companion.context
-import com.connor.moviecat.BaseActivity
+import com.connor.moviecat.common.BaseActivity
 import com.connor.moviecat.R
 import com.connor.moviecat.databinding.ActivitySearchBinding
 import com.connor.moviecat.model.net.ApiPath

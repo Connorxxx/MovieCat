@@ -7,12 +7,9 @@ import com.connor.moviecat.BuildConfig
 import com.connor.moviecat.model.DetailRepository
 import com.connor.moviecat.model.Repository
 import com.connor.moviecat.model.net.ApiPath
-import com.connor.moviecat.model.net.RepoPagingSource
 import com.connor.moviecat.model.room.MovieDataBase
 import com.connor.moviecat.viewmodel.DetailViewModel
 import com.connor.moviecat.viewmodel.MainViewModel
-import com.drake.net.cookie.PersistentCookieJar
-import com.drake.net.interceptor.LogRecordInterceptor
 import com.drake.net.okhttp.setDebug
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
