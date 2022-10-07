@@ -32,7 +32,7 @@ class MoviePagingSource(
     suspend fun movie(path: String, page: Int, query: String? = null) =
         client.get(path) {
             parameter("page", page)
-            if (query != null) parameter("query", query)
+            query?.let { parameter("query", it) }
         }.body<Movie>()
 
 }
