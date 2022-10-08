@@ -8,7 +8,7 @@
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
-/app/src/main/java/com/connor/moviecat/ApiKey.kt
+/app/src/main/java/com/connor/moviecat/Key.kt
 .DS_Store
 /build
 /captures

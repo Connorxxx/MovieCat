@@ -3,7 +3,6 @@ package com.connor.moviecat.di
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.connor.moviecat.ApiKey
 import com.connor.moviecat.BuildConfig
 import com.connor.moviecat.model.DetailRepository
 import com.connor.moviecat.model.Repository
