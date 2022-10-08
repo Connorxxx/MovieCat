@@ -4,6 +4,7 @@ import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.connor.moviecat.BuildConfig
+import com.connor.moviecat.Key
 import com.connor.moviecat.model.DetailRepository
 import com.connor.moviecat.model.Repository
 import com.connor.moviecat.model.room.MovieDataBase
@@ -44,7 +45,7 @@ fun client(context: Context) = HttpClient(OkHttp) {
             protocol = URLProtocol.HTTPS
             host = "api.themoviedb.org"
             path("3/")
-            parameters.append(ApiKey.API_KEY, ApiKey.API_KEY_VALUE)
+            parameters.append(Key.API_KEY, Key.API_KEY_VALUE)
            // parameters.append("language", "en")
         }
     }
