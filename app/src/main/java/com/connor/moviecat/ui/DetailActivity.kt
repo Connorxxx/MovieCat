@@ -87,8 +87,10 @@ class DetailActivity : BaseActivity(R.layout.activity_detail) {
             launch {
                 lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
                     viewModel.check.collect {
-                        if (it) binding.detailPart.addDatabase.load(R.drawable.outline_bookmark_24)
-                        else binding.detailPart.addDatabase.load(R.drawable.ic_baseline_bookmark_border_24)
+                        with(binding.detailPart.addDatabase) {
+                            if (it) load(R.drawable.outline_bookmark_24)
+                            else R.drawable.ic_baseline_bookmark_border_24
+                        }
                     }
                 }
             }
