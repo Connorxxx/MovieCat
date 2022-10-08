@@ -24,4 +24,5 @@
     <dimen name="dp_4">4dp</dimen>
     <dimen name="dp_0">0dp</dimen>
     <dimen name="dp_minus_4">-4dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

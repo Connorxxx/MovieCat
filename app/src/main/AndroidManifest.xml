@@ -18,9 +18,12 @@
         android:theme="@style/Theme.MovieCat"
         tools:targetApi="31">
         <activity
+            android:name=".ui.BookmarkActivity"
+            android:exported="false"/>
+        <activity
             android:name=".ui.DetailActivity"
-            android:theme="@style/DetailActivityTheme"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/DetailActivityTheme" />
         <activity
             android:name=".ui.SearchActivity"
             android:exported="true" />

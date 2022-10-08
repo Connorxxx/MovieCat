@@ -63,7 +63,7 @@ fun ImageView.loadWithQuality(
         placeholderRes?.let {
             placeholder(placeholderRes)
         }
-        listener(onSuccess = { request, result ->
+        listener(onSuccess = { _, _ ->
             load(highQuality) {
                 placeholder(drawable) // If there was a way to not clear existing image before loading, this would not be required
                 errorRes?.let { error(errorRes) }

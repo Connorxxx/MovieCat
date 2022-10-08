@@ -12,9 +12,11 @@ import com.connor.moviecat.R
 import com.connor.moviecat.contract.Event
 import com.connor.moviecat.databinding.ActivityMainBinding
 import com.connor.moviecat.model.net.ApiPath
+import com.connor.moviecat.model.net.MovieUiResult
 import com.connor.moviecat.ui.adapter.TabPagerAdapter
 import com.connor.moviecat.ui.adapter.TrendingAdapter
 import com.connor.moviecat.utlis.Tools
+import com.connor.moviecat.utlis.startActivity
 import com.connor.moviecat.viewmodel.MainViewModel
 import com.drake.channel.sendTag
 import com.google.android.material.tabs.TabLayout
@@ -35,7 +37,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-        trendingAdapter = TrendingAdapter(this)
+        trendingAdapter = TrendingAdapter {
+            adapterOnClick(it)
+        }
         lifecycleScope.launch {
             viewModel.getPagingData(ApiPath.TRENDING_ALL_WEEK).collect {
                 trendingAdapter.submitData(it)
@@ -99,6 +103,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_ALWAYS
             setPageTransformer(getCarouselPagerTransformer())
             adapter = trendingAdapter
+        }
+    }
+
+    private fun adapterOnClick(result: MovieUiResult) {
+        startActivity<DetailActivity>(this) {
+            with(result) {
+                putExtra("movie_id", id.toString())
+                putExtra("media_type", mediaType)
+                putExtra("poster_path", posterPath)
+            }
         }
     }
 

@@ -8,6 +8,7 @@ import com.connor.moviecat.R
 import com.connor.moviecat.contract.onScroll
 import com.connor.moviecat.databinding.FragmentTVShowBinding
 import com.connor.moviecat.model.net.ApiPath
+import com.connor.moviecat.model.net.MovieUiResult
 import com.connor.moviecat.ui.adapter.FooterAdapter
 import com.connor.moviecat.ui.adapter.MovieAdapter
 import com.connor.moviecat.viewmodel.MainViewModel
@@ -24,7 +25,9 @@ class TVShowFragment : EngineFragment<FragmentTVShowBinding>(R.layout.fragment_t
     override fun initView() {
         val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding.rv.layoutManager = layoutManager
-        tvAdapter = MovieAdapter(requireActivity(), "tv")
+        tvAdapter = MovieAdapter {
+            adapterOnClick(it)
+        }
         binding.rv.adapter = tvAdapter.withLoadStateFooter(
             FooterAdapter{ tvAdapter.retry() }
         )
@@ -41,6 +44,16 @@ class TVShowFragment : EngineFragment<FragmentTVShowBinding>(R.layout.fragment_t
                 viewModel.event.collect {
                     it.onScroll { binding.rv.scrollToPosition(0) }
                 }
+            }
+        }
+    }
+
+    private fun adapterOnClick(result: MovieUiResult) {
+        com.connor.moviecat.utlis.startActivity<DetailActivity>(requireActivity()) {
+            with(result) {
+                putExtra("movie_id", id.toString())
+                putExtra("media_type", "tv")
+                putExtra("poster_path", posterPath)
             }
         }
     }
