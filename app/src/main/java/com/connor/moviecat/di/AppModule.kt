@@ -8,6 +8,7 @@ import com.connor.moviecat.Key
 import com.connor.moviecat.model.DetailRepository
 import com.connor.moviecat.model.Repository
 import com.connor.moviecat.model.room.MovieDataBase
+import com.connor.moviecat.viewmodel.BookmarkViewModel
 import com.connor.moviecat.viewmodel.DetailViewModel
 import com.connor.moviecat.viewmodel.MainViewModel
 import com.drake.net.okhttp.setDebug
@@ -36,6 +37,7 @@ val appModule = module {
     //single { (path: String) -> RepoPagingSource(get(), path) }
     viewModel { MainViewModel(get()) }
     viewModel { DetailViewModel(get()) }
+    viewModel { BookmarkViewModel(get()) }
 
 }
 

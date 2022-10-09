@@ -62,17 +62,7 @@ class MovieAdapter(private val onClick: (MovieUiResult) -> Unit) :
             parent,
             false
         )
-        val holder = ViewHolder(binding)
-//        holder.getBinding().imgMovie.setOnClickListener {
-//            startActivity<DetailActivity>(ctx) {
-//                with(holder.getBinding().m!!) {
-//                    putExtra("movie_id", id.toString())
-//                    putExtra("media_type", media)
-//                    putExtra("poster_path", posterPath)
-//                }
-//            }
-//        }
-        return holder
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

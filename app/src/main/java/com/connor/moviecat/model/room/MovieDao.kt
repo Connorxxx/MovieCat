@@ -15,6 +15,6 @@ interface MovieDao {
     @Query("DELETE FROM movies WHERE id = :id")
     suspend fun deleteMovie(id: Int): Int
 
-    @Query("select * from movies")
+    @Query("select * from movies ORDER BY title")
     fun loadAllMoves(): Flow<List<MovieEntity>>
 }
