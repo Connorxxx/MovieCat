@@ -5,8 +5,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import coil.load
-import com.connor.moviecat.common.BaseActivity
 import com.connor.moviecat.R
+import com.connor.moviecat.common.BaseActivity
 import com.connor.moviecat.databinding.ActivityDetailBinding
 import com.connor.moviecat.model.net.ApiPath
 import com.connor.moviecat.model.room.MovieEntity
@@ -14,7 +14,9 @@ import com.connor.moviecat.utlis.ImageUtils
 import com.connor.moviecat.utlis.Tools.openLink
 import com.connor.moviecat.utlis.loadWithQuality
 import com.connor.moviecat.viewmodel.DetailViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 class DetailActivity : BaseActivity(R.layout.activity_detail) {

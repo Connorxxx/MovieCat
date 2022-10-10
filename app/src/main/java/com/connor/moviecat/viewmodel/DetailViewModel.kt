@@ -3,7 +3,6 @@ package com.connor.moviecat.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.connor.moviecat.model.DetailRepository
-import com.connor.moviecat.model.room.MovieDao
 import com.connor.moviecat.model.room.MovieEntity
 import com.connor.moviecat.utlis.ModelMapper
 import kotlinx.coroutines.Dispatchers

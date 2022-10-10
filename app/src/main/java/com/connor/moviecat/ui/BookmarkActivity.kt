@@ -1,13 +1,12 @@
 package com.connor.moviecat.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.connor.moviecat.R
 import com.connor.moviecat.databinding.ActivityBookmarkBinding
-import com.connor.moviecat.model.net.MovieUiResult
 import com.connor.moviecat.model.room.MovieEntity
 import com.connor.moviecat.ui.adapter.BookmarkAdapter
 import com.connor.moviecat.viewmodel.BookmarkViewModel

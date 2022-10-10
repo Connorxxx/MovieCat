@@ -1,11 +1,12 @@
 package com.connor.moviecat.utlis
 
-import com.connor.moviecat.model.net.*
+import com.connor.moviecat.model.net.Detail
+import com.connor.moviecat.model.net.DetailUiModel
+import com.connor.moviecat.model.net.MovieResult
+import com.connor.moviecat.model.net.MovieUiResult
 import java.math.BigDecimal
-import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.roundToInt
 
 object ModelMapper {
 

@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.connor.moviecat.R
 import com.connor.moviecat.databinding.ItemBookmarkBinding
-import com.connor.moviecat.model.net.MovieUiResult
 import com.connor.moviecat.model.room.MovieEntity
 import com.connor.moviecat.utlis.ImageUtils
 

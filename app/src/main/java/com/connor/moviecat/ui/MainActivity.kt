@@ -18,7 +18,6 @@ import com.connor.moviecat.ui.adapter.TrendingAdapter
 import com.connor.moviecat.utlis.Tools
 import com.connor.moviecat.utlis.startActivity
 import com.connor.moviecat.viewmodel.MainViewModel
-import com.drake.channel.sendTag
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.launch

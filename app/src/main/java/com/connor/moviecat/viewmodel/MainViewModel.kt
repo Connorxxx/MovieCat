@@ -8,8 +8,8 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.filter
 import androidx.paging.map
-import com.connor.moviecat.model.Repository
 import com.connor.moviecat.contract.Event
+import com.connor.moviecat.model.Repository
 import com.connor.moviecat.model.net.MovieUiResult
 import com.connor.moviecat.ui.MovieFragment
 import com.connor.moviecat.ui.TVShowFragment
@@ -28,7 +28,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     val event = _event.asSharedFlow()
 
     @OptIn(FlowPreview::class)
-    val paging = _paging.receiveAsFlow().flatMapMerge { it }.flowOn(Dispatchers.Default)
+    val paging = _paging.receiveAsFlow().flatMapMerge { it }
 
     fun sendEvent(event: Event) {
         viewModelScope.launch {
@@ -46,7 +46,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
         repository.getPagingData(path)
             .map { pagingResult ->
                 pagingResult.map { ModelMapper.toMovieUiResult(it) }
-            }.cachedIn(viewModelScope)
+            }.flowOn(Dispatchers.Default).cachedIn(viewModelScope)
 
     private fun getSearchPagingData(path: String, query: String? = null) =
         repository.getPagingData(path, query)
@@ -54,7 +54,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
                 pagingResult.map { ModelMapper.toMovieUiResult(it) }
                     .filter { it.posterPath != null }
                     .filter { it.releaseOrFirstAirDate.length >= 4 }
-            }.cachedIn(viewModelScope)
+            }.flowOn(Dispatchers.Default).cachedIn(viewModelScope)
 
 
     val titles = ArrayList<String>().apply {

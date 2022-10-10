@@ -2,20 +2,16 @@ package com.connor.moviecat.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.MotionEvent
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
-import androidx.paging.PagingSource
-import androidx.paging.map
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.connor.moviecat.App.Companion.context
-import com.connor.moviecat.common.BaseActivity
 import com.connor.moviecat.R
+import com.connor.moviecat.common.BaseActivity
 import com.connor.moviecat.databinding.ActivitySearchBinding
 import com.connor.moviecat.model.net.ApiPath
 import com.connor.moviecat.model.net.MovieUiResult
@@ -24,8 +20,13 @@ import com.connor.moviecat.ui.adapter.SearchAdapter
 import com.connor.moviecat.utlis.showSnackBar
 import com.connor.moviecat.utlis.textChanges
 import com.connor.moviecat.viewmodel.MainViewModel
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchActivity : BaseActivity(R.layout.activity_search) {
