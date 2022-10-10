@@ -23,23 +23,17 @@ import kotlinx.coroutines.launch
 class MainViewModel(private val repository: Repository) : ViewModel() {
 
     private val _event = MutableSharedFlow<Event>()
-    private val _size = MutableStateFlow(-1)
     private val _paging = Channel<Flow<PagingData<MovieUiResult>>>()
 
     val event = _event.asSharedFlow()
-    val size = _size.asStateFlow()
 
     @OptIn(FlowPreview::class)
-    val paging = _paging.receiveAsFlow().flatMapMerge { it }
+    val paging = _paging.receiveAsFlow().flatMapMerge { it }.flowOn(Dispatchers.Default)
 
     fun sendEvent(event: Event) {
         viewModelScope.launch {
             _event.emit(event)
         }
-    }
-
-    fun setSize(size: Int) {
-        _size.value = size
     }
 
     fun sendQuery(path: String, query: String? = null) {
@@ -52,7 +46,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
         repository.getPagingData(path)
             .map { pagingResult ->
                 pagingResult.map { ModelMapper.toMovieUiResult(it) }
-            }.cachedIn(viewModelScope).flowOn(Dispatchers.Default)
+            }.cachedIn(viewModelScope)
 
     private fun getSearchPagingData(path: String, query: String? = null) =
         repository.getPagingData(path, query)
@@ -60,7 +54,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
                 pagingResult.map { ModelMapper.toMovieUiResult(it) }
                     .filter { it.posterPath != null }
                     .filter { it.releaseOrFirstAirDate.length >= 4 }
-            }.cachedIn(viewModelScope).flowOn(Dispatchers.Default)
+            }.cachedIn(viewModelScope)
 
 
     val titles = ArrayList<String>().apply {

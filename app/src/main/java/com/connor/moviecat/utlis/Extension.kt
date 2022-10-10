@@ -8,20 +8,25 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.paging.PagingSource
+import androidx.paging.PagingSource.LoadResult
 import coil.load
+import coil.network.HttpException
 import com.connor.moviecat.App
 import com.drake.logcat.LogCat
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
+import java.io.IOException
 import kotlin.math.floor
 
-inline fun <reified T : Any> fire(block: () -> PagingSource.LoadResult<Int, T>) = try {
+inline fun <reified T : Any> fire(block: () -> LoadResult<Int, T>) = try {
     block()
-} catch (e: Exception) {
+} catch (e: IOException) {
     LogCat.e(e, "KtorTest")
-    PagingSource.LoadResult.Error(e)
+    LoadResult.Error(e)
+} catch (e: HttpException) {
+    LogCat.e(e, "KtorTest")
+    LoadResult.Error(e)
 }
 
 inline fun <reified T> startActivity(context: Context, block: Intent.() -> Unit) {

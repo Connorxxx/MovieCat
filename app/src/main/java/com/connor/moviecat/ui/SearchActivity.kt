@@ -7,7 +7,10 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
+import androidx.paging.PagingSource
 import androidx.paging.map
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.connor.moviecat.App.Companion.context
@@ -56,18 +59,16 @@ class SearchActivity : BaseActivity(R.layout.activity_search) {
                     }
             }
             launch {
-                viewModel.size.collect {
-                    if (it == 0) {
-                        binding.lottieError.visibility = View.VISIBLE
-                    } else binding.lottieError.visibility = View.GONE
+                searchAdapter.loadStateFlow.collect {
+                    binding.lottieError.isVisible =
+                        it.append.endOfPaginationReached && searchAdapter.itemCount <= 0
+                    binding.lottieNoNet.isVisible = it.refresh is LoadState.Error
+                    binding.rv.isVisible = it.refresh !is LoadState.Error
                 }
             }
             viewModel.paging.collect {
                 launch(default) {
                     searchAdapter.submitData(it)
-                    searchAdapter.addLoadStateListener {
-                        viewModel.setSize(searchAdapter.itemCount)
-                    }
                 }
             }
         }

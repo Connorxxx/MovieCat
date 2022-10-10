@@ -1,5 +1,6 @@
 package com.connor.moviecat.model
 
+import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.connor.moviecat.model.net.*
