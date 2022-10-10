@@ -22,7 +22,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            app:lottie_rawRes="@raw/cat_playing" />
+            app:lottie_rawRes="@raw/cat_in_box" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMovie"
