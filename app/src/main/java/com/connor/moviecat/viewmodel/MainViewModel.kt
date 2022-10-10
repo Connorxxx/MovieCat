@@ -23,9 +23,11 @@ import kotlinx.coroutines.launch
 class MainViewModel(private val repository: Repository) : ViewModel() {
 
     private val _event = MutableSharedFlow<Event>()
+    private val _size = MutableStateFlow(-1)
     private val _paging = Channel<Flow<PagingData<MovieUiResult>>>()
 
     val event = _event.asSharedFlow()
+    val size = _size.asStateFlow()
 
     @OptIn(FlowPreview::class)
     val paging = _paging.receiveAsFlow().flatMapMerge { it }
@@ -34,6 +36,10 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
         viewModelScope.launch {
             _event.emit(event)
         }
+    }
+
+    fun setSize(size: Int) {
+        _size.value = size
     }
 
     fun sendQuery(path: String, query: String? = null) {

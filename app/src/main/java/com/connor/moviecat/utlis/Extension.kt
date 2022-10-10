@@ -4,11 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.paging.PagingSource
 import coil.load
@@ -17,7 +15,6 @@ import com.drake.logcat.LogCat
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.onStart
 import kotlin.math.floor
 
 inline fun <reified T : Any> fire(block: () -> PagingSource.LoadResult<Int, T>) = try {

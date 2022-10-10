@@ -1,6 +1,5 @@
 package com.connor.moviecat.ui.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -11,11 +10,10 @@ import coil.load
 import com.connor.moviecat.R
 import com.connor.moviecat.databinding.ItemSearchBinding
 import com.connor.moviecat.model.net.MovieUiResult
-import com.connor.moviecat.ui.DetailActivity
 import com.connor.moviecat.utlis.ImageUtils
-import com.connor.moviecat.utlis.startActivity
 
-class SearchAdapter(private val ctx: Context) : PagingDataAdapter<MovieUiResult, SearchAdapter.ViewHolder>(COMPARATOR) {
+class SearchAdapter(private val onClick: (MovieUiResult) -> Unit)
+    : PagingDataAdapter<MovieUiResult, SearchAdapter.ViewHolder>(COMPARATOR) {
 
     companion object {
         private val COMPARATOR = object : DiffUtil.ItemCallback<MovieUiResult>() {
@@ -31,8 +29,22 @@ class SearchAdapter(private val ctx: Context) : PagingDataAdapter<MovieUiResult,
 
     inner class ViewHolder(private val binding: ItemSearchBinding)
         : RecyclerView.ViewHolder(binding.root) {
-        fun getBinding(): ItemSearchBinding {
-            return binding
+
+        init {
+            binding.imgMovie.setOnClickListener {
+                binding.m?.let {
+                    onClick(it)
+                }
+            }
+        }
+
+        fun bind(result: MovieUiResult) {
+            binding.m = result
+            binding.imgMovie.load(
+                "${ImageUtils.IMAGE_W_500}${result.posterPath}"
+            ) {
+                placeholder(R.drawable.placeholder)
+            }
         }
     }
 
@@ -43,29 +55,11 @@ class SearchAdapter(private val ctx: Context) : PagingDataAdapter<MovieUiResult,
             parent,
             false
         )
-        val holder = ViewHolder(binding)
-        holder.getBinding().imgMovie.setOnClickListener {
-            startActivity<DetailActivity>(ctx) {
-                with(holder.getBinding().m!!) {
-                    putExtra("movie_id", id.toString())
-                    putExtra("media_type", mediaType)
-                    putExtra("poster_path",posterPath)
-                }
-            }
-        }
-        return holder
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.getBinding().m = getItem(position)
         val repo = getItem(position)
-        if (repo != null) {
-            holder.getBinding().m = repo
-            holder.getBinding().imgMovie.load(
-                "${ImageUtils.IMAGE_W_500}${repo.posterPath}"
-            ) {
-                placeholder(R.drawable.placeholder)
-            }
-        }
+        repo?.let { holder.bind(it) }
     }
 }

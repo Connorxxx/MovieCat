@@ -16,10 +16,11 @@ class MoviePagingSource(
     override suspend fun load(params: LoadParams<Int>) = fire {
         val page = params.key ?: 1
         val repoResponse = movie(path, page, query)
+
         LoadResult.Page(
             data = repoResponse.results,
             prevKey = if (page > 1) page - 1 else null,
-            nextKey = if (page != repoResponse.totalPages) page + 1 else null
+            nextKey = if (page != repoResponse.totalPages && repoResponse.totalPages != 0) page + 1 else null
         )
     }
 

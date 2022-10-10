@@ -49,10 +49,6 @@ class MovieAdapter(private val onClick: (MovieUiResult) -> Unit) :
                 placeholder(R.drawable.placeholder)
             }
         }
-
-        fun getBinding(): ItemMovieBinding {
-            return binding
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -66,7 +62,6 @@ class MovieAdapter(private val onClick: (MovieUiResult) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-      //  holder.getBinding().m = getItem(position)
         val repo = getItem(position)
         repo?.let { holder.bind(it) }
     }

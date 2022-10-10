@@ -2,16 +2,20 @@ package com.connor.moviecat.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.map
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.connor.moviecat.App.Companion.context
 import com.connor.moviecat.common.BaseActivity
 import com.connor.moviecat.R
 import com.connor.moviecat.databinding.ActivitySearchBinding
 import com.connor.moviecat.model.net.ApiPath
+import com.connor.moviecat.model.net.MovieUiResult
 import com.connor.moviecat.ui.adapter.FooterAdapter
 import com.connor.moviecat.ui.adapter.SearchAdapter
 import com.connor.moviecat.utlis.showSnackBar
@@ -51,8 +55,20 @@ class SearchActivity : BaseActivity(R.layout.activity_search) {
                         binding.rv.scrollToPosition(0)
                     }
             }
+            launch {
+                viewModel.size.collect {
+                    if (it == 0) {
+                        binding.lottieError.visibility = View.VISIBLE
+                    } else binding.lottieError.visibility = View.GONE
+                }
+            }
             viewModel.paging.collect {
-                launch(default) { searchAdapter.submitData(it) }
+                launch(default) {
+                    searchAdapter.submitData(it)
+                    searchAdapter.addLoadStateListener {
+                        viewModel.setSize(searchAdapter.itemCount)
+                    }
+                }
             }
         }
     }
@@ -61,7 +77,9 @@ class SearchActivity : BaseActivity(R.layout.activity_search) {
         with(binding.rv) {
             val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             layoutManager = manager
-            searchAdapter = SearchAdapter(this@SearchActivity)
+            searchAdapter = SearchAdapter {
+                adapterOnClick(it)
+            }
             adapter = searchAdapter.withLoadStateFooter(
                 FooterAdapter { searchAdapter.retry() }
             )
@@ -87,6 +105,16 @@ class SearchActivity : BaseActivity(R.layout.activity_search) {
                     imm.hideSoftInputFromWindow(windowToken, 0)
                 } else showSnackBar("Please Input")
                 return@setOnEditorActionListener true
+            }
+        }
+    }
+
+    private fun adapterOnClick(result: MovieUiResult) {
+        com.connor.moviecat.utlis.startActivity<DetailActivity>(this) {
+            with(result) {
+                putExtra("movie_id", id.toString())
+                putExtra("media_type", mediaType)
+                putExtra("poster_path", posterPath)
             }
         }
     }
