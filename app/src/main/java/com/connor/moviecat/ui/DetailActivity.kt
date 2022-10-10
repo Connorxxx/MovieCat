@@ -89,7 +89,7 @@ class DetailActivity : BaseActivity(R.layout.activity_detail) {
                     viewModel.check.collect {
                         with(binding.detailPart.addDatabase) {
                             if (it) load(R.drawable.outline_bookmark_24)
-                            else R.drawable.ic_baseline_bookmark_border_24
+                            else load(R.drawable.ic_baseline_bookmark_border_24)
                         }
                     }
                 }

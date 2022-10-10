@@ -12,6 +12,14 @@
         android:layout_height="match_parent"
         tools:context=".ui.BookmarkActivity">
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieCatPlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:lottie_rawRes="@raw/cat_playing"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMovie"
             android:layout_width="0dp"
@@ -19,6 +27,7 @@
             android:layout_marginStart="@dimen/dp_16"
             android:clipToPadding="false"
             android:paddingTop="@dimen/dp_24"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

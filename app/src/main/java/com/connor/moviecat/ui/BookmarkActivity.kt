@@ -2,6 +2,7 @@ package com.connor.moviecat.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.connor.moviecat.R
@@ -39,8 +40,22 @@ class BookmarkActivity : AppCompatActivity(R.layout.activity_bookmark) {
 
     private fun initScope() {
         lifecycleScope.launch {
-            viewModel.getMovies.collect {
-                bookmarkAdapter.submitList(it)
+            launch {
+                viewModel.getMovies.collect {
+                    bookmarkAdapter.submitList(it)
+                    viewModel.setSize(it.size)
+                }
+            }
+            launch {
+                viewModel.size.collect {
+                    if (it != 0) {
+                        binding.rvMovie.visibility = View.VISIBLE
+                        binding.lottieCatPlay.visibility = View.GONE
+                    } else {
+                        binding.rvMovie.visibility = View.GONE
+                        binding.lottieCatPlay.visibility = View.VISIBLE
+                    }
+                }
             }
         }
     }
