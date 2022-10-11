@@ -2,6 +2,7 @@ package com.connor.moviecat.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.connor.moviecat.DaoType
 import com.connor.moviecat.model.DetailRepository
 import com.connor.moviecat.model.room.MovieEntity
 import com.connor.moviecat.utlis.ModelMapper
@@ -15,11 +16,8 @@ class DetailViewModel(private val repository: DetailRepository) : ViewModel() {
     private val _check = MutableStateFlow(false)
     val check = _check.asStateFlow()
 
-    private val _insert = Channel<Long>()
-    val insert = _insert.receiveAsFlow()
-
-    private val _delete = Channel<Int>()
-    val delete = _delete.receiveAsFlow()
+    private val _dao = Channel<DaoType>()
+    val dao = _dao.receiveAsFlow()
 
     val getMovies = repository.getMovies()
 
@@ -27,16 +25,24 @@ class DetailViewModel(private val repository: DetailRepository) : ViewModel() {
         _check.value = check
     }
 
-    fun insertMovie(movies: MovieEntity) {
-        viewModelScope.launch(Dispatchers.IO) {
-            _insert.send(repository.insertMovie(movies))
+    fun insert(movies: MovieEntity) {
+        viewModelScope.launch {
+            _dao.send(DaoType.Insert(movies))
         }
     }
 
-    fun deleteMovie(id: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            _delete.send(repository.deleteMovie(id))
+    fun delete(id: Int) {
+        viewModelScope.launch {
+            _dao.send(DaoType.Delete(id))
         }
+    }
+
+    suspend fun insertMovie(movies: MovieEntity) {
+        repository.insertMovie(movies)
+    }
+
+    suspend fun deleteMovie(id: Int) {
+        repository.deleteMovie(id)
     }
 
 

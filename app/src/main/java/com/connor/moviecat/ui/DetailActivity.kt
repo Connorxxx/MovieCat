@@ -1,7 +1,6 @@
 package com.connor.moviecat.ui
 
 import android.animation.Animator
-import android.graphics.drawable.Animatable
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
@@ -13,6 +12,8 @@ import com.connor.moviecat.common.BaseActivity
 import com.connor.moviecat.databinding.ActivityDetailBinding
 import com.connor.moviecat.model.net.ApiPath
 import com.connor.moviecat.model.room.MovieEntity
+import com.connor.moviecat.onDelete
+import com.connor.moviecat.onInsert
 import com.connor.moviecat.utlis.ImageUtils
 import com.connor.moviecat.utlis.Tools.openLink
 import com.connor.moviecat.utlis.loadWithQuality
@@ -60,11 +61,11 @@ class DetailActivity : BaseActivity(R.layout.activity_detail) {
                         )
                         binding.lottieBookmark.isVisible = true
                         binding.lottieBookmark.playAnimation()
-                        viewModel.insertMovie(moves)
+                        viewModel.insert(moves)
                         viewModel.setCheck(true)
                     }
                 } else {
-                    viewModel.deleteMovie(id.toInt())
+                    viewModel.delete(id.toInt())
                     viewModel.setCheck(false)
                 }
             }
@@ -125,11 +126,13 @@ class DetailActivity : BaseActivity(R.layout.activity_detail) {
                     }
                 }
             }
-            launch {
-                viewModel.insert.collect {}
-            }
-            launch {
-                viewModel.delete.collect {}
+            launch(io) {
+                viewModel.dao.collect { type ->
+                    with(type) {
+                        onInsert { viewModel.insertMovie(it) }
+                        onDelete { viewModel.deleteMovie(it) }
+                    }
+                }
             }
             launch(default) {
                 viewModel.getMovies.collect {
