@@ -1,15 +1,13 @@
 package com.connor.moviecat.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.connor.moviecat.DaoType
 import com.connor.moviecat.model.DetailRepository
 import com.connor.moviecat.model.room.MovieEntity
+import com.connor.moviecat.type.DaoType
 import com.connor.moviecat.utlis.ModelMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 
 class DetailViewModel(private val repository: DetailRepository) : ViewModel() {
 
@@ -26,15 +24,11 @@ class DetailViewModel(private val repository: DetailRepository) : ViewModel() {
     }
 
     fun insert(movies: MovieEntity) {
-        viewModelScope.launch {
-            _dao.send(DaoType.Insert(movies))
-        }
+        _dao.trySend(DaoType.Insert(movies))
     }
 
     fun delete(id: Int) {
-        viewModelScope.launch {
-            _dao.send(DaoType.Delete(id))
-        }
+        _dao.trySend(DaoType.Delete(id))
     }
 
     suspend fun insertMovie(movies: MovieEntity) {
@@ -44,7 +38,6 @@ class DetailViewModel(private val repository: DetailRepository) : ViewModel() {
     suspend fun deleteMovie(id: Int) {
         repository.deleteMovie(id)
     }
-
 
     fun detail(type: String, id: String) = flow {
         emit(repository.detail(type, id))

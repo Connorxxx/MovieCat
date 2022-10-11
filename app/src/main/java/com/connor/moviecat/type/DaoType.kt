@@ -1,4 +1,4 @@
-package com.connor.moviecat
+package com.connor.moviecat.type
 
 import com.connor.moviecat.model.room.MovieEntity
 

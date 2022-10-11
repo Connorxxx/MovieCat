@@ -12,8 +12,8 @@ import com.connor.moviecat.common.BaseActivity
 import com.connor.moviecat.databinding.ActivityDetailBinding
 import com.connor.moviecat.model.net.ApiPath
 import com.connor.moviecat.model.room.MovieEntity
-import com.connor.moviecat.onDelete
-import com.connor.moviecat.onInsert
+import com.connor.moviecat.type.onDelete
+import com.connor.moviecat.type.onInsert
 import com.connor.moviecat.utlis.ImageUtils
 import com.connor.moviecat.utlis.Tools.openLink
 import com.connor.moviecat.utlis.loadWithQuality
