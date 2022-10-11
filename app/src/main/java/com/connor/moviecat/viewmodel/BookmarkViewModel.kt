@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.asStateFlow
 class BookmarkViewModel(private val repository: DetailRepository) : ViewModel() {
 
     private val _size = MutableStateFlow(0)
-
     val size = _size.asStateFlow()
 
     val getMovies = repository.getMovies()

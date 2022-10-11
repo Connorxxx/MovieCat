@@ -32,7 +32,6 @@
                 app:toolbarId="@+id/toolbar">
 
                 <androidx.appcompat.widget.AppCompatImageView
-
                     android:id="@+id/imgPoster"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -40,6 +39,13 @@
                     android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
                     app:layout_collapseMode="parallax" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/lottieBookmark"
+                    app:lottie_rawRes="@raw/bookmark"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
                 <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/toolbar"

@@ -1,6 +1,9 @@
 package com.connor.moviecat.ui
 
+import android.animation.Animator
+import android.graphics.drawable.Animatable
 import android.os.Bundle
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -38,6 +41,7 @@ class DetailActivity : BaseActivity(R.layout.activity_detail) {
         setContentView(binding.root)
         window.statusBarColor = getColor(R.color.transparent)
         setActionBarAndHome(binding.toolbar)
+        initListener()
         initScope()
         initPoster()
         initClick()
@@ -54,6 +58,8 @@ class DetailActivity : BaseActivity(R.layout.activity_detail) {
                         val moves = MovieEntity(
                             id, posterPath, title, releaseOrFirstAirDate, voteAverage, type
                         )
+                        binding.lottieBookmark.isVisible = true
+                        binding.lottieBookmark.playAnimation()
                         viewModel.insertMovie(moves)
                         viewModel.setCheck(true)
                     }
@@ -84,13 +90,36 @@ class DetailActivity : BaseActivity(R.layout.activity_detail) {
         )
     }
 
+    private fun initListener() {
+        binding.lottieBookmark.addAnimatorListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(p0: Animator?) {
+
+            }
+
+            override fun onAnimationEnd(p0: Animator?) {
+                binding.lottieBookmark.isVisible = false
+            }
+
+            override fun onAnimationCancel(p0: Animator?) {
+
+            }
+
+            override fun onAnimationRepeat(p0: Animator?) {
+
+            }
+
+        })
+    }
+
     private fun initScope() {
         lifecycleScope.launch(main) {
             launch {
                 lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
                     viewModel.check.collect {
                         with(binding.detailPart.addDatabase) {
-                            if (it) load(R.drawable.outline_bookmark_24)
+                            if (it) {
+                                load(R.drawable.outline_bookmark_24)
+                            }
                             else load(R.drawable.ic_baseline_bookmark_border_24)
                         }
                     }
