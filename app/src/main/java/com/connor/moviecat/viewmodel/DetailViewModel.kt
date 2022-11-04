@@ -23,12 +23,8 @@ class DetailViewModel(private val repository: DetailRepository) : ViewModel() {
         _check.value = check
     }
 
-    fun insert(movies: MovieEntity) {
-        _dao.trySend(DaoType.Insert(movies))
-    }
-
-    fun delete(id: Int) {
-        _dao.trySend(DaoType.Delete(id))
+    fun sendDaoType(daoType: DaoType) {
+        _dao.trySend(daoType)
     }
 
     suspend fun insertMovie(movies: MovieEntity) {

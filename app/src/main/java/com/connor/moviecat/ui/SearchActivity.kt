@@ -87,7 +87,8 @@ class SearchActivity : BaseActivity(R.layout.activity_search) {
             )
             setOnTouchListener { view, motionEvent ->
                 when (motionEvent.action) {
-                    MotionEvent.ACTION_MOVE -> imm.hideSoftInputFromWindow(windowToken, 0)
+                    MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE ->
+                        imm.hideSoftInputFromWindow(windowToken, 0)
                     MotionEvent.ACTION_UP -> view.performClick()
                 }
                 super.onTouchEvent(motionEvent)

@@ -12,6 +12,7 @@ import com.connor.moviecat.common.BaseActivity
 import com.connor.moviecat.databinding.ActivityDetailBinding
 import com.connor.moviecat.model.net.ApiPath
 import com.connor.moviecat.model.room.MovieEntity
+import com.connor.moviecat.type.DaoType
 import com.connor.moviecat.type.onDelete
 import com.connor.moviecat.type.onInsert
 import com.connor.moviecat.utlis.ImageUtils
@@ -61,11 +62,13 @@ class DetailActivity : BaseActivity(R.layout.activity_detail) {
                         )
                         binding.lottieBookmark.isVisible = true
                         binding.lottieBookmark.playAnimation()
-                        viewModel.insert(moves)
+                       // viewModel.insert(moves)
+                        viewModel.sendDaoType(DaoType.Insert(moves))
                         viewModel.setCheck(true)
                     }
                 } else {
-                    viewModel.delete(id.toInt())
+                    //viewModel.delete(id.toInt())
+                    viewModel.sendDaoType(DaoType.Delete(id.toInt()))
                     viewModel.setCheck(false)
                 }
             }
