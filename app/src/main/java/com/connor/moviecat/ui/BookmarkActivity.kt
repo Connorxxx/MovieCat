@@ -3,6 +3,7 @@ package com.connor.moviecat.ui
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.connor.moviecat.R
@@ -47,13 +48,8 @@ class BookmarkActivity : AppCompatActivity(R.layout.activity_bookmark) {
             }
             launch {
                 viewModel.size.collect {
-                    if (it != 0) {
-                        binding.rvMovie.visibility = View.VISIBLE
-                        binding.lottieCatPlay.visibility = View.GONE
-                    } else {
-                        binding.rvMovie.visibility = View.GONE
-                        binding.lottieCatPlay.visibility = View.VISIBLE
-                    }
+                    binding.rvMovie.isVisible = it != 0
+                    binding.lottieCatPlay.isVisible = it == 0
                 }
             }
         }
