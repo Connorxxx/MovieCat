@@ -1,6 +1,7 @@
 package com.connor.moviecat.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.connor.moviecat.model.DetailRepository
 import com.connor.moviecat.model.room.MovieEntity
 import com.connor.moviecat.type.DaoType
@@ -8,13 +9,14 @@ import com.connor.moviecat.utlis.ModelMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 class DetailViewModel(private val repository: DetailRepository) : ViewModel() {
 
     private val _check = MutableStateFlow(false)
     val check = _check.asStateFlow()
 
-    private val _dao = Channel<DaoType>()
+    private val _dao = Channel<DaoType<MovieEntity>>()
     val dao = _dao.receiveAsFlow()
 
     val getMovies = repository.getMovies()
@@ -23,8 +25,10 @@ class DetailViewModel(private val repository: DetailRepository) : ViewModel() {
         _check.value = check
     }
 
-    fun sendDaoType(daoType: DaoType) {
-        _dao.trySend(daoType)
+    fun sendDaoType(daoType: DaoType<MovieEntity>) {
+        viewModelScope.launch {
+            _dao.send(daoType)
+        }
     }
 
     suspend fun insertMovie(movies: MovieEntity) {

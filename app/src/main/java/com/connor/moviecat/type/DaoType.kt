@@ -1,17 +1,15 @@
 package com.connor.moviecat.type
 
-import com.connor.moviecat.model.room.MovieEntity
+sealed interface DaoType<out T> {
+    data class Delete(val id: Int): DaoType<Nothing>
 
-sealed class DaoType {
-    data class Delete(val id: Int): DaoType()
-
-    data class Insert(val movies: MovieEntity): DaoType()
+    data class Insert<out T>(val movies: T): DaoType<T>
 }
 
-inline fun DaoType.onDelete(delete: (Int) -> Unit) {
+inline fun DaoType<*>.onDelete(delete: (Int) -> Unit) {
     if (this is DaoType.Delete) delete(id)
 }
 
-inline fun DaoType.onInsert(insert: (MovieEntity) -> Unit) {
+inline fun <T> DaoType<T>.onInsert(insert: (T) -> Unit) {
     if (this is DaoType.Insert) insert(movies)
 }
